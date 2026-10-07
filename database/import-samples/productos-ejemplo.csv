@@ -1,0 +1,4 @@
+sku,name,brand,pet_type,category,description,price,currency,stock,image_url,data_origin,active
+AV-MAN-001,"Arnés acolchado talla S",Patio Norte,dog,collars_leashes,"Arnés de pecho con acolchado interior y dos puntos de ajuste. Medidas de referencia para la demo.",17.99,USD,14,,manual,1
+AV-MAN-002,"Bebedero de botella 500 ml",Madriguera Co.,small_pet,bowls_feeders,"Botella plástica de 500 ml con tubo metálico y soporte para jaula.",5.99,USD,25,,manual,1
+AV-MAN-003,"Manta de cuadra acolchada, talla 1.45 m",Establo Sur,horse,equine_care,"Manta de exterior con forro acolchado y cierre frontal con hebillas. Verifica la talla antes de comprar.",104.99,USD,2,,manual,1

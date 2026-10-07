@@ -1,0 +1,28 @@
+# Apache: el VirtualHost debe apuntar DocumentRoot a esta carpeta (public/).
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Archivos y carpetas reales de public/ se sirven tal cual.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Todo lo demás pasa por el front controller.
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Nunca servir archivos ocultos (.env, .git, etc.) si existieran aquí.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|svg|png|jpe?g|webp|woff2?)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+AddType image/svg+xml .svg

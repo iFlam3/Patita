@@ -1,0 +1,3 @@
+# storage/ contiene logs, correos de desarrollo, caché y límites de intentos.
+# Nunca debe servirse por web.
+Require all denied

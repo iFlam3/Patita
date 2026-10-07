@@ -1,0 +1,30 @@
+{
+    "products": [
+        {
+            "sku": "AV-MAN-004",
+            "name": "Arena aglomerante sin aroma, 10 kg",
+            "brand": "Patita Básicos",
+            "pet_type": "cat",
+            "category": "grooming",
+            "description": "Bolsa de 10 kg de arena aglomerante sin aroma añadido. La composición exacta no está disponible en esta demo.",
+            "price": "15.99",
+            "currency": "USD",
+            "stock": 30,
+            "data_origin": "manual",
+            "active": true
+        },
+        {
+            "sku": "AV-MAN-005",
+            "name": "Termómetro adhesivo para acuario",
+            "brand": "Agua Clara Lab",
+            "pet_type": "fish",
+            "category": "aquarium_terrarium",
+            "description": "Tira adhesiva de cristal líquido para pegar en la cara exterior del acuario.",
+            "price": "2.99",
+            "currency": "USD",
+            "stock": 60,
+            "data_origin": "manual",
+            "active": true
+        }
+    ]
+}

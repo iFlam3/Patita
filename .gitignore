@@ -1,0 +1,11 @@
+.env
+/vendor/
+/storage/cache/http/*
+/storage/logs/*
+/storage/mail/*
+/storage/ratelimit/*
+/storage/imports/*
+!/storage/**/.gitkeep
+!/storage/.htaccess
+.DS_Store
+Thumbs.db

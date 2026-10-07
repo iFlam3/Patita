@@ -1,0 +1,5 @@
+# Defensa adicional por si el servidor se configura por error con la raíz del
+# proyecto como DocumentRoot: se bloquea todo (configuración, .env, logs,
+# correos y código). El DocumentRoot correcto es public/.
+Options -Indexes
+Require all denied
