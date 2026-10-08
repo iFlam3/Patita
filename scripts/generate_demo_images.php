@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/app/bootstrap.php';
 
-$sprite = (string) file_get_contents(BASE_PATH . '/public/assets/images/icons.svg');
+$sprite = (string) file_get_contents(PUBLIC_PATH . '/assets/images/icons.svg');
 $symbols = [];
 if (preg_match_all('#<symbol id="i-([a-z0-9-]+)"[^>]*>(.*?)</symbol>#s', $sprite, $matches, PREG_SET_ORDER) > 0) {
     foreach ($matches as $m) {
@@ -21,7 +21,7 @@ if (preg_match_all('#<symbol id="i-([a-z0-9-]+)"[^>]*>(.*?)</symbol>#s', $sprite
     }
 }
 
-$outDir = BASE_PATH . '/public/assets/images/demo';
+$outDir = PUBLIC_PATH . '/assets/images/demo';
 if (!is_dir($outDir) && !mkdir($outDir, 0775, true) && !is_dir($outDir)) {
     fwrite(STDERR, "No se pudo crear $outDir\n");
     exit(1);

@@ -22,6 +22,8 @@ function &config_store(): array
         $store = [
             'app'     => require BASE_PATH . '/app/config/app.php',
             'catalog' => require BASE_PATH . '/app/config/catalog.php',
+            'care'    => require BASE_PATH . '/app/config/care.php',
+            'tools'   => require BASE_PATH . '/app/config/tools.php',
             'runtime' => ['base_path' => '', 'https' => false],
         ];
     }
@@ -109,7 +111,7 @@ function absolute_url(string $path, array $query = []): string
 function asset(string $path): string
 {
     $path = ltrim($path, '/');
-    $file = BASE_PATH . '/public/' . $path;
+    $file = PUBLIC_PATH . '/' . $path;
     $version = is_file($file) ? '?v=' . (string) filemtime($file) : '';
 
     return url('/' . $path) . $version;
@@ -126,12 +128,12 @@ function product_image(?string $imageUrl, string $petType = '', string $category
         return $imageUrl;
     }
     if ($imageUrl !== '' && preg_match('#^[a-zA-Z0-9/_.-]+$#', $imageUrl) === 1 && !str_contains($imageUrl, '..')
-        && is_file(BASE_PATH . '/public/' . ltrim($imageUrl, '/'))) {
+        && is_file(PUBLIC_PATH . '/' . ltrim($imageUrl, '/'))) {
         return asset($imageUrl);
     }
 
     $fallback = 'assets/images/demo/' . $petType . '-' . $category . '.svg';
-    if (preg_match('#^[a-z_]+-[a-z_]+$#', $petType . '-' . $category) === 1 && is_file(BASE_PATH . '/public/' . $fallback)) {
+    if (preg_match('#^[a-z_]+-[a-z_]+$#', $petType . '-' . $category) === 1 && is_file(PUBLIC_PATH . '/' . $fallback)) {
         return asset($fallback);
     }
 
@@ -388,6 +390,27 @@ function enabled_payment_methods(): array
     }
 
     return $enabled;
+}
+
+/**
+ * Países de envío habilitados (SHIPPING_COUNTRIES; "*" = todos), con el país
+ * de la tienda primero.
+ *
+ * @return array<string, string> código => nombre
+ */
+function shipping_countries(): array
+{
+    $all = (array) config('catalog.countries', []);
+    $codes = (array) config('app.shop.shipping_countries', []);
+    $list = in_array('*', $codes, true)
+        ? $all
+        : array_intersect_key($all, array_flip(array_map('strval', $codes)));
+    $home = (string) config('app.country');
+    if (isset($list[$home])) {
+        $list = [$home => $list[$home]] + $list;
+    }
+
+    return array_map('strval', $list);
 }
 
 function country_name(string $code): string

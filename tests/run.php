@@ -11,6 +11,7 @@ require dirname(__DIR__) . '/app/bootstrap.php';
 
 use App\Core\Validator;
 use App\Services\Cart;
+use App\Services\PetTools;
 use App\Services\Import\Classifier;
 use App\Services\Import\FileImportReader;
 use App\Services\Import\HttpClient;
@@ -114,7 +115,7 @@ $check('dinero: formato de respaldo incluye la moneda', str_contains(format_mone
 $check('slug: acentos y signos', slugify('Arnés acolchado, talla S') === 'arnes-acolchado-talla-s');
 $check('slug: punto final', slugify('Madriguera Co.') === 'madriguera-co');
 $check('slug: medidas con ×', slugify('Terrario 60 × 30') === 'terrario-60-x-30');
-$check('catálogo: 7 mascotas', count(pets()) === 7);
+$check('catálogo: 8 mascotas (incluye granja)', count(pets()) === 8);
 $check('catálogo: 9 categorías', count(categories()) === 9);
 $check('catálogo: slug de mascota', pet_by_slug('animales-pequenos') === 'small_pet' && pet_by_slug('dinosaurios') === null);
 $check('pedido: número con ceros', order_number(42) === 'PAT-000042');
@@ -137,6 +138,7 @@ $check('validación: teléfono demasiado corto', isset($v2->phone('phone')->erro
 
 $check('clasificador: conejo', Classifier::pet('Heno para conejos') === 'small_pet');
 $check('clasificador: inglés', Classifier::pet('Rabbit hay feeder') === 'small_pet');
+$check('clasificador: granja', Classifier::pet('Comedero para gallinas ponedoras') === 'farm');
 $check('clasificador: no adivina', Classifier::pet('Producto genérico') === null);
 $check('clasificador: categoría', Classifier::category('Dog Feeding Mats') === 'bowls_feeders');
 $check('clasificador: no confunde "cat" dentro de otra palabra', Classifier::pet('Catalogue stand') === null);
@@ -164,6 +166,24 @@ $check('bloqueo: ficha grande con reCAPTCHA de formulario no es bloqueo', !HttpC
 $check('carrito: huella independiente del orden', Cart::fingerprint([[2, 1, 500], [1, 3, 100]], 0) === Cart::fingerprint([[1, 3, 100], [2, 1, 500]], 0));
 $check('carrito: huella cambia con el precio', Cart::fingerprint([[1, 1, 100]], 0) !== Cart::fingerprint([[1, 1, 101]], 0));
 $check('carrito: huella cambia con el envío', Cart::fingerprint([[1, 1, 100]], 0) !== Cart::fingerprint([[1, 1, 100]], 9900));
+
+// ------------------------------------------------------------ herramientas
+
+$check('edad: gato de 1 año = 15', PetTools::humanAge('gato', 1) === 15.0);
+$check('edad: gato de 2 años = 24', PetTools::humanAge('gato', 2) === 24.0);
+$check('edad: gato de 10 años = 56', PetTools::humanAge('gato', 10) === 56.0);
+$check('edad: perro gigante envejece más rápido', PetTools::humanAge('perro', 10, 'gigante') > PetTools::humanAge('perro', 10, 'pequeno'));
+$check('edad: perro mediano de 6 meses = 7.5', PetTools::humanAge('perro', 0.5) === 7.5);
+$tox = PetTools::toxicity('dog', 'chocolate');
+$check('toxicidad: chocolate tóxico para perros', $tox !== null && $tox['level'] === 'toxic');
+$check('toxicidad: aguacate tóxico para aves', (PetTools::toxicity('bird', 'aguacate')['level'] ?? '') === 'toxic');
+$check('toxicidad: sin datos si no hay fuente', (PetTools::toxicity('fish', 'macadamia')['level'] ?? '') === 'nodata');
+$check('toxicidad: alimento desconocido', PetTools::toxicity('dog', 'plutonio') === null);
+$w = PetTools::healthyWeight(22, 7);
+$check('peso: condición 7 = 20 % de exceso', $w['status'] === 'over' && $w['excess_percent'] === 20 && $w['ideal'] === 18.3);
+$check('peso: condición ideal conserva el peso', PetTools::healthyWeight(10, 5)['ideal'] === 10.0);
+$check('peso: delgadez no calcula cifra', PetTools::healthyWeight(10, 3)['ideal'] === null);
+$check('países: lista completa', count((array) config('catalog.countries')) > 200 && country_name('US') === 'Estados Unidos');
 
 // ------------------------------------------------------------ resultado
 

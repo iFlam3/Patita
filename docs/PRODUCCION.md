@@ -11,8 +11,6 @@ que falta construir antes de vender de verdad.
 - **MySQL 8.** Se verificó en MariaDB 10.4.28. El esquema usa sintaxis
   compatible (CHECK requiere MySQL 8.0.16+; las funciones de ventana del bloque
   de destacados requieren MySQL 8.0+ o MariaDB 10.2+).
-- **Envío por SMTP.** El transporte `smtp` (PHPMailer) está implementado pero no
-  se probó contra un servidor real. Solo se verificó el transporte `log`.
 - **Apache con `.htaccess`.** Se verificó con el servidor embebido de PHP. Las
   reglas de `public/.htaccess` y los bloqueos de `storage/`, `app/` y la raíz
   no se probaron en Apache/Nginx.
@@ -78,6 +76,23 @@ agregar una tabla. Límites por defecto: 5 intentos fallidos por correo + IP y
 - **Impuestos y facturación**: no se calculan ni se emiten comprobantes.
 - **Correos de estado**: solo se envía la confirmación del pedido; los cambios
   de estado no notifican al cliente.
+
+### Páginas legales, guías y herramientas
+
+- **Términos, privacidad y devoluciones son textos base genéricos.** Antes de
+  publicar debe revisarlos un abogado según el país de operación (protección al
+  consumidor, datos personales, plazos legales de devolución). El plazo de 15
+  días de devolución es una política de la tienda, no un requisito legal.
+- **Guías de cuidado** con información general de divulgación; conviene que las
+  revise un veterinario antes del lanzamiento.
+- **Alimentos peligrosos**: basado en listas públicas de la ASPCA. Cubre 11
+  alimentos; donde no hay dato verificado para una especie se muestra "Sin
+  datos" en lugar de suponer que es seguro.
+- **Edad y peso saludable**: estimaciones orientativas (tablas de equivalencia y
+  escala de condición corporal de 9 puntos), solo para perros y gatos.
+- **Imágenes subidas**: se validan pero no se re-codifican ni redimensionan
+  porque la extensión GD no está habilitada en el entorno de prueba. En
+  producción conviene activar GD o Imagick para generar versiones optimizadas.
 
 ### Contenido y marca
 

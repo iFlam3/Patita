@@ -49,6 +49,8 @@ $cartCount = App\Services\Cart::count();
             </details>
             <a href="<?= e(url('/marcas')) ?>">Comprar por marca</a>
             <a href="<?= e(url('/catalogo')) ?>">Catálogo</a>
+            <a href="<?= e(url('/cuidados')) ?>">Cuidados</a>
+            <a href="<?= e(url('/herramientas')) ?>">Herramientas</a>
             <a class="main-nav-secondary" href="<?= e(url('/envios-y-pagos')) ?>">Envíos y pagos</a>
             <?php if ($user !== null && $user['role'] === 'admin'): ?>
                 <a class="main-nav-admin" href="<?= e(url('/admin')) ?>">Administración</a>

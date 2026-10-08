@@ -35,7 +35,7 @@ final class HomeController extends Controller
             'title'          => 'Envíos y pagos',
             'flatRate'       => to_cents((string) config('app.shop.shipping_flat_rate', '0')),
             'freeFrom'       => \App\Services\Cart::freeShippingFrom(),
-            'countries'      => (array) config('app.shop.shipping_countries', []),
+            'countries'      => shipping_countries(),
             'paymentMethods' => enabled_payment_methods(),
         ]);
     }

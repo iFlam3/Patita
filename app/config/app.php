@@ -14,11 +14,13 @@ return [
     'debug'       => Env::bool('APP_DEBUG', false),
     'url'         => rtrim((string) Env::get('APP_URL', 'http://127.0.0.1:8080'), '/'),
     'demo_notice' => Env::bool('APP_DEMO_NOTICE', false),
+    'contact_email' => (string) Env::get('CONTACT_EMAIL', (string) Env::get('MAIL_FROM_ADDRESS', 'hola@example.test')),
+    'contact_phone' => (string) Env::get('CONTACT_PHONE', ''),
 
-    'country'  => strtoupper((string) Env::get('APP_COUNTRY', 'SV')),
-    'locale'   => Env::get('APP_LOCALE', 'es-SV'),
+    'country'  => strtoupper((string) Env::get('APP_COUNTRY', 'VE')),
+    'locale'   => Env::get('APP_LOCALE', 'es-US'),
     'currency' => strtoupper((string) Env::get('APP_CURRENCY', 'USD')),
-    'timezone' => Env::get('APP_TIMEZONE', 'America/El_Salvador'),
+    'timezone' => Env::get('APP_TIMEZONE', 'America/Caracas'),
 
     'db' => [
         'host'     => Env::get('DB_HOST', '127.0.0.1'),
@@ -37,7 +39,7 @@ return [
     'shop' => [
         'shipping_flat_rate'  => (string) Env::get('SHIPPING_FLAT_RATE', '5.99'),
         'shipping_free_from'  => (string) Env::get('SHIPPING_FREE_FROM', '0'),
-        'shipping_countries'  => array_map('strtoupper', Env::list('SHIPPING_COUNTRIES', (string) Env::get('APP_COUNTRY', 'SV'))),
+        'shipping_countries'  => array_map('strtoupper', Env::list('SHIPPING_COUNTRIES', (string) Env::get('APP_COUNTRY', 'VE'))),
         'payment_methods'     => Env::list('PAYMENT_METHODS', 'bank_transfer,cash_on_delivery'),
         'bank_details'        => (string) Env::get('BANK_TRANSFER_DETAILS', ''),
         'max_qty_per_item'    => max(1, Env::int('MAX_QTY_PER_ITEM', 20)),

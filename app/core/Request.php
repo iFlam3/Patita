@@ -86,6 +86,22 @@ final class Request
     }
 
     /**
+     * Archivo subido (entrada de $_FILES) o null si no se envió ninguno.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function file(string $key): ?array
+    {
+        $file = $_FILES[$key] ?? null;
+        if (!is_array($file) || is_array($file['name'] ?? null)
+            || (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+
+        return $file;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function allInput(): array

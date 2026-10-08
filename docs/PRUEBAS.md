@@ -6,9 +6,9 @@ Windows 11) y el servidor embebido de PHP.
 - **Verificado**: se ejecutó y el resultado fue el esperado.
 - **Pendiente**: implementado, sin ejecutar en este entorno.
 
-Pruebas automáticas sin base de datos: `php tests/run.php` (67 pruebas:
+Pruebas automáticas sin base de datos: `php tests/run.php` (81 pruebas:
 robots.txt, JSON-LD, importes, validación, CSV, detección de bloqueos, huella
-del carrito). Resultado: 67 correctas.
+del carrito, calculadoras y países). Resultado: 81 correctas.
 
 ## Instalación
 
@@ -38,7 +38,7 @@ del carrito). Resultado: 67 correctas.
 | Catálogo sin JavaScript | El formulario envía por GET y pagina con enlaces | Pendiente de prueba manual con JS desactivado |
 | Producto sin stock | Mensaje "Sin existencias por ahora" y sin botón de compra | Verificado |
 | Producto inexistente o inactivo | 404 en español | Verificado |
-| Precios con `Intl.NumberFormat` | `$549.00` en `es-SV` | Verificado |
+| Precios con `Intl.NumberFormat` | `$29.99` en `es-US` | Verificado |
 
 ## Carrito
 
@@ -131,3 +131,26 @@ del carrito). Resultado: 67 correctas.
 | Enlace "Saltar al contenido" | Primer elemento enfocable | Verificado |
 | Contraste | Ver tabla en `DECISIONES.md` | Verificado (cálculo) |
 | Lector de pantalla | — | Pendiente |
+
+## Ampliación del 8 de octubre de 2026
+
+| Prueba | Esperado | Estado |
+|--------|----------|--------|
+| Páginas nuevas (cuidados, herramientas, acerca de, preguntas frecuentes, términos, privacidad, devoluciones, contacto, granja) | 200 | Verificado |
+| Guía de cuidado inexistente | 404 | Verificado |
+| Edad: perro grande de 7 años y 6 meses | ≈ 57 años humanos | Verificado |
+| Edad con texto inválido | Mensaje de error | Verificado |
+| Chocolate para perro | "Tóxico: no se lo des" | Verificado |
+| Alimento sin dato para la especie | "Sin datos verificados" con advertencia | Verificado |
+| Peso: gato de 6 kg con sobrepeso | ≈ 5.0 kg de referencia | Verificado |
+| Países en el checkout | 219, con Venezuela primero | Verificado |
+| Subida de imagen válida (PNG) | Se guarda en uploads/products y se ve en la ficha | Verificado |
+| Archivo con código disfrazado de PNG | Rechazado | Verificado |
+| Filtros de precio Desde/Hasta alineados | Misma altura | Verificado |
+| Pie de página al fondo en páginas cortas | Layout de altura completa | Implementado; pendiente de revisión visual |
+| Bloqueo de scripts en `public/uploads` con Apache | 403 | Pendiente (solo probado con servidor embebido) |
+| Envío real por SMTP (Gmail, STARTTLS, contraseña de aplicación) | Correo de prueba aceptado por el servidor | Verificado |
+| Etiquetas formales en alimentos peligrosos | "Tóxico para esta especie", "No recomendado", "Sin información verificada" | Verificado |
+| Paquete de InfinityFree en Apache real (XAMPP, carpeta temporal) | Sitio, rutas, sesión, carrito y registro funcionan; `_app`, `.env`, `.htaccess` y `storage` dan 403 | Verificado |
+| Paquete en el servidor de InfinityFree | — | Pendiente (lo haces tú con la guía) |
+| Correo SMTP desde InfinityFree | — | Pendiente: el plan gratuito podría bloquear puertos SMTP |

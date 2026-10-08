@@ -6,11 +6,14 @@ namespace App\Controllers;
 
 use App\Core\Request;
 use App\Core\Response;
+use App\Core\Session;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\Import\ImportReport;
 use App\Services\Import\Sources;
+use App\Services\Mailer;
+use Throwable;
 
 /**
  * Inicio del panel e información del importador (que se ejecuta por CLI).
@@ -46,5 +49,33 @@ final class AdminController extends Controller
             'reports'        => ImportReport::latest(10),
             'importConfig'   => (array) config('app.import'),
         ]);
+    }
+
+    /**
+     * Envía un correo de prueba al administrador actual (útil en hostings sin
+     * terminal). Nunca muestra la contraseña SMTP.
+     *
+     * @param array<string, string> $params
+     */
+    public function testMail(Request $request, array $params): Response
+    {
+        $user = $this->user();
+        try {
+            Mailer::send(
+                (string) $user['email'],
+                (string) $user['name'],
+                'Prueba de correo de ' . config('app.name'),
+                'Este es un correo de prueba enviado desde el panel de ' . config('app.name') . ".\n\n"
+                . "Si lo recibiste, el envío de correos funciona.\n"
+            );
+            Session::flash('success', config('app.mail.transport') === 'smtp'
+                ? 'Enviamos un correo de prueba a ' . $user['email'] . '. Revisa tu bandeja de entrada y la carpeta de spam.'
+                : 'MAIL_TRANSPORT es "log": el correo se guardó en storage/mail en lugar de enviarse.');
+        } catch (Throwable $e) {
+            log_message('mail', 'Fallo del correo de prueba.', ['error' => $e->getMessage()]);
+            Session::flash('error', 'No se pudo enviar el correo de prueba: ' . $e->getMessage());
+        }
+
+        return $this->redirect('/admin');
     }
 }

@@ -12,7 +12,8 @@ use RuntimeException;
  * - MAIL_TRANSPORT=log: guarda cada mensaje como .eml en storage/mail
  *   (desarrollo). La carpeta está bloqueada para la web; el enlace de
  *   recuperación nunca se muestra en pantalla.
- * - MAIL_TRANSPORT=smtp: usa PHPMailer (composer require phpmailer/phpmailer).
+ * - MAIL_TRANSPORT=smtp: envía con App\Services\SmtpClient (STARTTLS o SSL,
+ *   AUTH LOGIN), sin dependencias externas.
  */
 final class Mailer
 {
@@ -64,35 +65,20 @@ final class Mailer
      */
     private static function sendSmtp(array $config, string $toEmail, string $toName, string $subject, string $body): void
     {
-        $class = 'PHPMailer\\PHPMailer\\PHPMailer';
-        if (!class_exists($class)) {
-            throw new RuntimeException('Para usar SMTP instala PHPMailer: composer require phpmailer/phpmailer');
-        }
-
-        $mail = new $class(true);
-        $mail->isSMTP();
-        $mail->CharSet = 'UTF-8';
-        $mail->Host = (string) $config['host'];
-        $mail->Port = (int) $config['port'];
-        $mail->SMTPAuth = (string) $config['username'] !== '';
-        $mail->Username = (string) $config['username'];
-        $mail->Password = (string) $config['password'];
-        $encryption = (string) $config['encryption'];
-        if ($encryption === 'tls') {
-            $mail->SMTPSecure = 'tls';
-        } elseif ($encryption === 'ssl') {
-            $mail->SMTPSecure = 'ssl';
-        } else {
-            $mail->SMTPSecure = '';
-            $mail->SMTPAutoTLS = false;
-        }
-        $mail->Timeout = 15;
-        $mail->setFrom((string) $config['from'], (string) $config['from_name']);
-        $mail->addAddress($toEmail, $toName);
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-        $mail->isHTML(false);
-        $mail->send();
+        (new SmtpClient(
+            (string) $config['host'],
+            (int) $config['port'],
+            (string) $config['encryption'],
+            (string) $config['username'],
+            (string) $config['password'],
+        ))->send(
+            self::clean((string) $config['from']),
+            self::clean((string) $config['from_name']),
+            $toEmail,
+            $toName,
+            $subject,
+            $body
+        );
     }
 
     /**

@@ -1,5 +1,5 @@
 -- =============================================================================
--- Patita — catálogo inicial de DEMOSTRACIÓN (28 productos, 4 por mascota)
+-- Patita — catálogo inicial de DEMOSTRACIÓN (48 productos: 4 por mascota, más estética y granja)
 --
 -- IMPORTANTE
 -- * Todos estos productos tienen data_origin = 'demo'. NO fueron extraídos de
@@ -116,3 +116,68 @@ VALUES
 ('AV-DEMO-SMA-04', 'Hamaca de tela para hurón', 'hamaca-tela-huron', 'Madriguera Co.', 'small_pet', 'beds_habitats',
  'Hamaca de tela de 45 × 45 cm con cuatro ganchos metálicos para colgar dentro de la jaula.',
  10.99, 'USD', 9, 'assets/images/demo/small_pet-beds_habitats.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 28 MINUTE, UTC_TIMESTAMP());
+
+-- Estética canina y felina, y granja (también datos de demostración) ------
+INSERT INTO products
+    (sku, name, slug, brand, pet_type, category, description, price, currency, stock, image_url, data_origin, active, created_at, updated_at)
+VALUES
+('PAT-EST-DOG-01', 'Champú para perro de pelo corto, 500 ml', 'champu-perro-pelo-corto-500-ml', 'Patita Pro', 'dog', 'grooming',
+ 'Champú de uso externo en frasco de 500 ml. Sigue el modo de uso de la etiqueta y evita el contacto con los ojos. La fórmula exacta no está disponible en esta demo.',
+ 9.99, 'USD', 30, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 0 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-02', 'Acondicionador desenredante para perro, 500 ml', 'acondicionador-desenredante-perro-500-ml', 'Patita Pro', 'dog', 'grooming',
+ 'Acondicionador de uso externo en frasco de 500 ml para aplicar después del baño. Sigue el modo de uso de la etiqueta.',
+ 11.99, 'USD', 20, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 1 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-03', 'Cepillo carda autolimpiable', 'cepillo-carda-autolimpiable', 'Patita Pro', 'dog', 'grooming',
+ 'Cepillo de púas metálicas con botón que retira el pelo acumulado. Mango antideslizante.',
+ 12.99, 'USD', 25, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 2 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-04', 'Cortaúñas tipo tijera con tope de seguridad', 'cortaunas-tijera-tope-seguridad', 'Patita Pro', 'dog', 'grooming',
+ 'Cortaúñas de acero inoxidable con tope ajustable y lima incluida. Si no tienes experiencia, pide a un profesional que te muestre cómo cortar.',
+ 8.99, 'USD', 40, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 3 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-05', 'Máquina cortapelo inalámbrica con 4 peines guía', 'maquina-cortapelo-inalambrica-4-peines', 'Patita Pro', 'dog', 'grooming',
+ 'Cortapelo recargable para peluquería canina, con cuchilla desmontable, cuatro peines guía de 3 a 12 mm y base de carga.',
+ 49.99, 'USD', 6, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 4 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-06', 'Tijeras curvas de peluquería, 18 cm', 'tijeras-curvas-peluqueria-18-cm', 'Patita Pro', 'dog', 'grooming',
+ 'Tijeras de acero inoxidable de 18 cm con hoja curva para acabados y apoyadedos removible.',
+ 24.99, 'USD', 10, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 5 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-07', 'Mesa de peluquería plegable con brazo', 'mesa-peluqueria-plegable-brazo', 'Patita Pro', 'dog', 'grooming',
+ 'Mesa plegable de 90 × 60 cm con superficie de goma antideslizante, brazo de altura ajustable y lazo de sujeción. Nunca dejes a tu mascota sola sobre la mesa.',
+ 129.99, 'USD', 3, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 6 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-DOG-08', 'Secador soplador para mascotas de dos velocidades', 'secador-soplador-mascotas-dos-velocidades', 'Patita Pro', 'dog', 'grooming',
+ 'Secador de 2 velocidades y 2 temperaturas con manguera flexible y tres boquillas. Mantén siempre una distancia segura de la piel.',
+ 89.99, 'USD', 4, 'assets/images/demo/dog-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 7 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-CAT-01', 'Cepillo deslanador para gato', 'cepillo-deslanador-gato', 'Patita Pro', 'cat', 'grooming',
+ 'Cepillo con hoja dentada protegida para retirar pelo suelto de la capa interna. Mango ergonómico.',
+ 14.99, 'USD', 18, 'assets/images/demo/cat-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 8 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-CAT-02', 'Guante de aseo de silicona', 'guante-aseo-silicona', 'Patita Pro', 'cat', 'grooming',
+ 'Guante con puntas de silicona para cepillar mientras acaricias. Talla única con cierre ajustable.',
+ 7.99, 'USD', 35, 'assets/images/demo/cat-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 9 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-CAT-03', 'Champú en seco en espuma para gato, 200 ml', 'champu-seco-espuma-gato-200-ml', 'Patita Pro', 'cat', 'grooming',
+ 'Espuma de uso externo en envase de 200 ml que no requiere enjuague. Sigue el modo de uso de la etiqueta y evita los ojos.',
+ 10.99, 'USD', 15, 'assets/images/demo/cat-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 10 SECOND, UTC_TIMESTAMP()),
+('PAT-EST-CAT-04', 'Cortaúñas pequeño para gato', 'cortaunas-pequeno-gato', 'Patita Pro', 'cat', 'grooming',
+ 'Cortaúñas de hoja semicircular de acero inoxidable, del tamaño adecuado para uñas pequeñas.',
+ 6.99, 'USD', 30, 'assets/images/demo/cat-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 11 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-01', 'Alimento para gallinas ponedoras, 20 kg', 'alimento-gallinas-ponedoras-20-kg', 'Granja Viva', 'farm', 'food',
+ 'Saco de 20 kg de alimento para gallinas ponedoras. La composición y la ración diaria no están disponibles en esta demo: consulta la etiqueta del fabricante.',
+ 27.99, 'USD', 12, 'assets/images/demo/farm-food.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 12 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-02', 'Comedero de tolva para aves de corral, 5 kg', 'comedero-tolva-aves-corral-5-kg', 'Granja Viva', 'farm', 'bowls_feeders',
+ 'Comedero de plástico con tolva de 5 kg, plato con rejilla y asa para colgar.',
+ 15.99, 'USD', 20, 'assets/images/demo/farm-bowls_feeders.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 13 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-03', 'Bebedero de sifón para aves de corral, 5 L', 'bebedero-sifon-aves-corral-5-l', 'Granja Viva', 'farm', 'bowls_feeders',
+ 'Bebedero de dos piezas con depósito de 5 L y base de llenado por gravedad.',
+ 11.99, 'USD', 22, 'assets/images/demo/farm-bowls_feeders.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 14 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-04', 'Nidal ponedero de plástico', 'nidal-ponedero-plastico', 'Granja Viva', 'farm', 'beds_habitats',
+ 'Nidal de plástico lavable de 35 × 30 × 35 cm con techo inclinado y bandeja extraíble.',
+ 19.99, 'USD', 10, 'assets/images/demo/farm-beds_habitats.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 15 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-05', 'Comedero de canal para cerdos, 1 m', 'comedero-canal-cerdos-1-m', 'Granja Viva', 'farm', 'bowls_feeders',
+ 'Comedero de plástico resistente de 1 m de largo con bordes reforzados y patas de apoyo.',
+ 34.99, 'USD', 5, 'assets/images/demo/farm-bowls_feeders.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 16 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-06', 'Cepillo de cerdas para ganado', 'cepillo-cerdas-ganado', 'Granja Viva', 'farm', 'grooming',
+ 'Cepillo de cerdas sintéticas duras de 22 cm con correa para la mano, para cabras, ovejas y ganado.',
+ 9.99, 'USD', 14, 'assets/images/demo/farm-grooming.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 17 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-07', 'Bloque de sal para ganado, 2 kg', 'bloque-sal-ganado-2-kg', 'Granja Viva', 'farm', 'food',
+ 'Bloque de sal compactada de 2 kg con orificio para colgar. Consulta a un veterinario sobre la suplementación de tu ganado.',
+ 6.99, 'USD', 25, 'assets/images/demo/farm-food.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 18 SECOND, UTC_TIMESTAMP()),
+('PAT-GRA-08', 'Red de heno para cabras y ovejas', 'red-heno-cabras-ovejas', 'Granja Viva', 'farm', 'bowls_feeders',
+ 'Red de nailon con cordón de cierre para ofrecer heno en el corral. Capacidad aproximada de 5 kg.',
+ 13.99, 'USD', 9, 'assets/images/demo/farm-bowls_feeders.svg', 'demo', 1, UTC_TIMESTAMP() - INTERVAL 19 SECOND, UTC_TIMESTAMP());

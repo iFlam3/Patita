@@ -22,7 +22,7 @@ $storeCurrency = (string) config('app.currency');
     </header>
 
     <div class="admin-form-layout">
-        <form class="panel admin-form" action="<?= e($action) ?>" method="post" novalidate>
+        <form class="panel admin-form" action="<?= e($action) ?>" method="post" enctype="multipart/form-data" novalidate>
             <?= csrf_field() ?>
 
             <fieldset class="form-section">
@@ -121,8 +121,18 @@ $storeCurrency = (string) config('app.currency');
 
             <fieldset class="form-section">
                 <legend>Imagen y origen</legend>
+                <?php $currentImage = $isNew ? '' : (string) $product['image_url']; ?>
+                <div class="image-field">
+                    <img class="image-field-preview" src="<?= e(product_image($currentImage, $values['pet_type'], $values['category'])) ?>" alt="Imagen actual del producto" width="160" height="120">
+                    <div class="field">
+                        <label for="p-image-file">Subir imagen <span class="optional">(JPG, PNG o WebP, máx. 3 MB)</span></label>
+                        <input id="p-image-file" name="image_file" type="file" accept="image/jpeg,image/png,image/webp"<?= field_attrs('image_file', $errors, 'p-image-file-hint') ?>>
+                        <p class="field-hint" id="p-image-file-hint">Usa fotos propias o con permiso de uso. Reemplaza la imagen actual. Se recomienda 1200 × 900 px.</p>
+                        <?= field_error('image_file', $errors) ?>
+                    </div>
+                </div>
                 <div class="field">
-                    <label for="p-image">Imagen <span class="optional">(opcional)</span></label>
+                    <label for="p-image">O ruta / URL de la imagen <span class="optional">(opcional)</span></label>
                     <input id="p-image" name="image_url" type="text" maxlength="500" value="<?= e($values['image_url']) ?>"<?= field_attrs('image_url', $errors, 'p-image-hint') ?>>
                     <p class="field-hint" id="p-image-hint">URL https con permiso de uso o ruta dentro de public/, por ejemplo assets/images/demo/dog-food.svg. Vacío = ilustración según mascota y categoría.</p>
                     <?= field_error('image_url', $errors) ?>

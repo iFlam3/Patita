@@ -12,6 +12,11 @@ if (PHP_VERSION_ID < 80000) {
 }
 
 define('BASE_PATH', dirname(__DIR__));
+// Carpeta pública (document root). Por defecto public/; en hostings donde todo
+// vive dentro del document root (InfinityFree) la define public/index.php.
+if (!defined('PUBLIC_PATH')) {
+    define('PUBLIC_PATH', BASE_PATH . '/public');
+}
 
 spl_autoload_register(static function (string $class): void {
     if (!str_starts_with($class, 'App\\')) {
@@ -27,7 +32,7 @@ spl_autoload_register(static function (string $class): void {
     }
 });
 
-// Dependencias opcionales de Composer (solo PHPMailer para SMTP).
+// Dependencias de Composer, si en el futuro se agregan (hoy no hay ninguna).
 if (is_file(BASE_PATH . '/vendor/autoload.php')) {
     require BASE_PATH . '/vendor/autoload.php';
 }

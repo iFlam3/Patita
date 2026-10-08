@@ -12,7 +12,7 @@
     var root = document.documentElement;
     root.classList.add('js');
 
-    var locale = root.getAttribute('data-locale') || 'es-SV';
+    var locale = root.getAttribute('data-locale') || 'es-US';
     var formatters = {};
 
     // ------------------------------------------------------------ precios

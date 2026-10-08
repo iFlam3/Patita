@@ -18,6 +18,14 @@ if (PHP_SAPI === 'cli-server') {
     }
 }
 
-require dirname(__DIR__) . '/app/bootstrap.php';
+define('PUBLIC_PATH', __DIR__);
+
+// Estructura normal: el código está junto a public/ (fuera del document root).
+// Estructura de hosting compartido (InfinityFree): el código está en _app/,
+// dentro del document root y bloqueado por .htaccess.
+$bootstrap = is_file(dirname(__DIR__) . '/app/bootstrap.php')
+    ? dirname(__DIR__) . '/app/bootstrap.php'
+    : __DIR__ . '/_app/app/bootstrap.php';
+require $bootstrap;
 
 App\Core\Kernel::handle();

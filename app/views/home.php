@@ -12,7 +12,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
         <div class="hero-copy">
             <h1 class="hero-title">Todo para tu mascota, sea cual sea.</h1>
             <p class="hero-lead">
-                Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos y animales pequeños.
+                Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos, animales pequeños y de granja.
                 Pagas por transferencia o al recibir.
             </p>
             <div class="hero-actions">
@@ -44,7 +44,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
         <ul class="pet-grid">
             <?php foreach (pets() as $code => $pet): ?>
                 <?php $count = $petCounts[$code] ?? 0; ?>
-                <li class="pet-card<?= isset($pet['subtypes']) ? ' pet-card-wide' : '' ?>">
+                <li class="pet-card">
                     <a href="<?= e(url('/mascotas/' . $pet['slug'])) ?>">
                         <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
                         <span class="pet-card-text">
@@ -105,6 +105,44 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
     </div>
 </section>
 
+<section class="section" aria-labelledby="cuida-titulo">
+    <div class="container">
+        <div class="section-head">
+            <h2 id="cuida-titulo">Cuida mejor a tu mascota</h2>
+        </div>
+        <ul class="tool-grid">
+            <li class="tool-card">
+                <a href="<?= e(url('/cuidados')) ?>">
+                    <span class="tool-card-icon"><?= icon('book-open') ?></span>
+                    <span class="tool-card-name">Guías de cuidado</span>
+                    <span class="tool-card-text">Alimentación, higiene, entorno y salud preventiva para cada especie.</span>
+                </a>
+            </li>
+            <li class="tool-card">
+                <a href="<?= e(url('/herramientas/edad')) ?>">
+                    <span class="tool-card-icon"><?= icon('cake') ?></span>
+                    <span class="tool-card-name">Edad en años humanos</span>
+                    <span class="tool-card-text">Calcula la edad equivalente de tu perro o gato.</span>
+                </a>
+            </li>
+            <li class="tool-card">
+                <a href="<?= e(url('/herramientas/alimentos-peligrosos')) ?>">
+                    <span class="tool-card-icon"><?= icon('apple') ?></span>
+                    <span class="tool-card-name">Alimentos peligrosos</span>
+                    <span class="tool-card-text">Chocolate, uvas, cebolla y otros alimentos peligrosos por especie.</span>
+                </a>
+            </li>
+            <li class="tool-card">
+                <a href="<?= e(url('/herramientas/peso-saludable')) ?>">
+                    <span class="tool-card-icon"><?= icon('scale') ?></span>
+                    <span class="tool-card-name">Peso saludable</span>
+                    <span class="tool-card-text">Evalúa su condición corporal y su peso de referencia.</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+
 <section class="section section-benefits" aria-labelledby="beneficios-titulo">
     <div class="container">
         <h2 id="beneficios-titulo" class="sr-only">Cómo compras en <?= e(config('app.name')) ?></h2>
@@ -121,8 +159,8 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
             </li>
             <li>
                 <?= icon('paw-print', 'icon icon-lg') ?>
-                <h3>Siete tipos de mascota</h3>
-                <p>De perros y gatos a reptiles, caballos, conejos y hurones.</p>
+                <h3>Ocho tipos de mascota</h3>
+                <p>De perros y gatos a reptiles, caballos, conejos y animales de granja.</p>
             </li>
             <li>
                 <?= icon('info', 'icon icon-lg') ?>

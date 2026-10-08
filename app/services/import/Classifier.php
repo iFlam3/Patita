@@ -15,6 +15,7 @@ final class Classifier
     private const PETS = [
         'small_pet' => ['conejo', 'rabbit', 'hamster', 'hámster', 'cobaya', 'cuyo', 'guinea pig', 'chinchilla', 'hurón', 'huron', 'ferret', 'small animal', 'small pet'],
         'horse'     => ['caballo', 'equino', 'horse', 'equine', 'pony'],
+        'farm'      => ['gallina', 'pollo', 'ave de corral', 'aves de corral', 'poultry', 'chicken', 'cerdo', 'pig', 'cabra', 'goat', 'oveja', 'sheep', 'vaca', 'cow', 'ganado', 'livestock', 'granja', 'farm'],
         'reptile'   => ['reptil', 'reptile', 'tortuga', 'turtle', 'tortoise', 'gecko', 'iguana', 'serpiente', 'snake', 'lizard', 'dragon'],
         'fish'      => ['pez', 'peces', 'fish', 'acuario', 'aquarium', 'betta', 'goldfish'],
         'bird'      => ['ave', 'aves', 'pájaro', 'pajaro', 'bird', 'parrot', 'loro', 'canario', 'canary', 'periquito', 'parakeet'],

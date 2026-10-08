@@ -10,6 +10,8 @@ use App\Core\Response;
 use App\Core\Session;
 use App\Core\Validator;
 use App\Models\Product;
+use App\Services\ImageUpload;
+use RuntimeException;
 
 /**
  * CRUD sencillo de productos.
@@ -115,6 +117,7 @@ final class AdminProductController extends Controller
     {
         $product = $this->findOrFail($params);
         Product::delete((int) $product['id']);
+        ImageUpload::delete((string) $product['image_url']);
         Session::flash('success', 'Eliminaste "' . (string) $product['name'] . '". Los pedidos anteriores conservan su detalle.');
 
         return $this->redirect('/admin/productos');
@@ -208,16 +211,28 @@ final class AdminProductController extends Controller
         $image = $input['image_url'];
         if ($image !== '') {
             $isRemote = preg_match('#^https://#i', $image) === 1 && filter_var($image, FILTER_VALIDATE_URL) !== false;
-            $isLocal = preg_match('#^assets/images/[A-Za-z0-9/_.-]+\.(svg|png|jpe?g|webp)$#', $image) === 1
-                && !str_contains($image, '..') && is_file(BASE_PATH . '/public/' . $image);
+            $isLocal = preg_match('#^(assets/images|uploads/products)/[A-Za-z0-9/_.-]+\.(svg|png|jpe?g|webp)$#', $image) === 1
+                && !str_contains($image, '..') && is_file(PUBLIC_PATH . '/' . $image);
             if ((!$isRemote && !$isLocal) || strlen($image) > 500) {
-                $v->addError('image_url', 'Usa una URL https o una ruta existente dentro de public/, por ejemplo assets/images/demo/dog-food.svg.');
+                $v->addError('image_url', 'Usa una URL https, una ruta existente dentro de public/ (por ejemplo assets/images/demo/dog-food.svg) o sube un archivo.');
             }
         }
 
         if ($input['active'] === '1' && !$v->fails()
             && ($input['currency'] !== $storeCurrency || to_cents($input['price']) <= 0)) {
             $v->addError('active', 'Para publicar el producto el precio debe ser mayor que cero y en ' . $storeCurrency . '.');
+        }
+
+        $upload = $request->file('image_file');
+        if ($upload !== null && !$v->fails()) {
+            try {
+                $image = ImageUpload::store($upload);
+                if ($product !== null && (string) $product['image_url'] !== $image) {
+                    ImageUpload::delete((string) $product['image_url']);
+                }
+            } catch (RuntimeException $e) {
+                $v->addError('image_file', $e->getMessage());
+            }
         }
 
         if ($v->fails()) {

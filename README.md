@@ -1,11 +1,14 @@
 # Patita (nombre provisional)
 
 Tienda en línea de accesorios e insumos para mascotas pensada para
-Latinoamérica: perros, gatos, aves, peces, reptiles, caballos y animales
-pequeños (conejos, cuyos, hámsteres, chinchillas y hurones). No vende animales
-vivos.
+Latinoamérica: perros, gatos, aves, peces, reptiles, caballos, animales
+pequeños (conejos, cuyos, hámsteres, chinchillas y hurones) y animales de
+granja. Incluye estética canina y felina, guías de cuidado por especie,
+herramientas interactivas (edad, alimentos peligrosos y peso saludable) y
+páginas de información (acerca de, preguntas frecuentes, términos, privacidad,
+devoluciones y contacto). No vende animales vivos.
 
-> **Tienda de demostración.** Los 28 productos iniciales, sus marcas, precios
+> **Tienda de demostración.** Los 48 productos iniciales, sus marcas, precios
 > (USD) y existencias son datos de prueba. No se procesan cobros.
 
 Stack: HTML5 semántico, CSS propio (sin compilación), JavaScript vanilla,
@@ -24,6 +27,7 @@ PHP sin framework, MySQL/MariaDB con PDO y consultas preparadas. Exactamente
 - [Seguridad](#seguridad)
 - [Estructura](#estructura)
 - [Pruebas](#pruebas)
+- [Publicar en InfinityFree, paso a paso](docs/DEPLOY_INFINITYFREE.md)
 - Documentos: [decisiones y nombres](docs/DECISIONES.md),
   [checklist de pruebas](docs/PRUEBAS.md),
   [limitaciones y pendientes](docs/PRODUCCION.md)
@@ -43,7 +47,7 @@ PHP sin framework, MySQL/MariaDB con PDO y consultas preparadas. Exactamente
 | Importador JSON/CSV | Sí | Sí |
 | Importador web petstore.direct | Sí, deshabilitado | Extracción verificada en 1 ficha; no se importó nada |
 | Importador web PetSmart | Sí, deshabilitado | **No verificado** (sus términos lo impiden) |
-| Envío por SMTP | Sí | **Pendiente de probar** |
+| Envío por SMTP | Sí | Sí, con Gmail (correo de prueba aceptado) |
 | PHP 8.2+ / MySQL 8 | Objetivo | **Pendiente**: se verificó en PHP 8.0.28 y MariaDB 10.4.28 |
 
 El detalle de cada prueba está en [docs/PRUEBAS.md](docs/PRUEBAS.md).
@@ -54,7 +58,7 @@ El detalle de cada prueba está en [docs/PRUEBAS.md](docs/PRUEBAS.md).
   `json` y `openssl`. El código también corre en PHP 8.0 (así se verificó con
   XAMPP), pero PHP 8.0 y 8.1 ya no reciben parches de seguridad.
 - **MySQL 8.0.16+ o MariaDB 10.4+** con InnoDB y `utf8mb4`.
-- No necesita Node ni compilación. Composer solo si usas SMTP.
+- No necesita Node, compilación ni Composer.
 
 ## Instalación
 
@@ -184,13 +188,32 @@ reescritura de URL con Apache en subdirectorio está pendiente de probar.
   `.eml` en `storage/mail`. Ábrelo con cualquier editor o cliente de correo para
   ver, por ejemplo, el enlace de recuperación de contraseña. Ese enlace nunca se
   muestra en la web.
-- **Producción** (`MAIL_TRANSPORT=smtp`): instala PHPMailer y completa
-  `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_ENCRYPTION`
-  y `MAIL_FROM_ADDRESS`.
+- **Producción** (`MAIL_TRANSPORT=smtp`): cliente SMTP propio
+  (`app/services/SmtpClient.php`, STARTTLS o SSL, verificación de certificado),
+  sin dependencias. Completa `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`,
+  `SMTP_PASSWORD`, `SMTP_ENCRYPTION` y `MAIL_FROM_ADDRESS`. Con Gmail usa
+  `smtp.gmail.com`, puerto `587`, `tls`, tu correo como usuario y remitente, y
+  una **contraseña de aplicación** (no la contraseña de la cuenta). Gmail limita
+  la cantidad de envíos diarios; para volumen real conviene un servicio
+  transaccional.
+
+Prueba la configuración:
 
 ```bash
-composer require phpmailer/phpmailer:^6.9
+php scripts/test_mail.php --to=tu@correo.com
 ```
+
+## Imágenes de productos
+
+- **Sube fotos desde el panel** (editar producto → "Subir imagen"): JPG, PNG o
+  WebP de hasta 3 MB y 5000 px. Se validan por contenido, se guardan con nombre
+  aleatorio en `public/uploads/products` (sin ejecución de scripts) y se borran
+  al reemplazarlas o al eliminar el producto. Recomendado: 1200 × 900 px.
+- **O escribe una ruta o URL**: una ruta dentro de `public/` o una URL `https`.
+- **Sin imagen**: se muestra la ilustración de su mascota y categoría.
+- Usa solo fotos propias, del proveedor con permiso o de bancos con licencia
+  comercial. No copies imágenes de otras tiendas.
+- La carpeta `public/uploads/products` no se sube a Git: respáldala aparte.
 
 ## Importador de productos
 
@@ -241,11 +264,11 @@ convierte precios externos ni usa el stock externo.
 
 | Variable | Demo | Uso |
 |----------|------|-----|
-| `APP_COUNTRY` | `MX` | País de la tienda |
+| `APP_COUNTRY` | `VE` | País de la tienda |
 | `APP_CURRENCY` | `USD` | Moneda de venta (código ISO 4217) |
-| `APP_LOCALE` | `es-SV` | Formato de precios con `Intl.NumberFormat` |
-| `APP_TIMEZONE` | `America/El_Salvador` | Zona para mostrar fechas (se guardan en UTC) |
-| `SHIPPING_COUNTRIES` | `MX` | Países de envío permitidos |
+| `APP_LOCALE` | `es-US` | Formato de precios con `Intl.NumberFormat` |
+| `APP_TIMEZONE` | `America/Caracas` | Zona para mostrar fechas (se guardan en UTC) |
+| `SHIPPING_COUNTRIES` | `*` | Países de envío: lista ISO separada por comas o `*` para todos (219) |
 | `SHIPPING_FLAT_RATE` / `SHIPPING_FREE_FROM` | `99.00` / `999.00` | Costo de envío y umbral de envío gratis |
 | `PAYMENT_METHODS` | `bank_transfer,cash_on_delivery` | Formas de pago demostrativas |
 
@@ -280,7 +303,7 @@ importación (nunca se mezclan monedas en un pedido).
 .
 ├── .env.example            Variables de entorno de ejemplo (sin credenciales)
 ├── .htaccess               Niega todo si la raíz se publica por error
-├── composer.json           Sin dependencias obligatorias (PHPMailer opcional)
+├── composer.json           Sin dependencias
 ├── app/
 │   ├── bootstrap.php       Autoload, .env, errores
 │   ├── helpers.php         e(), url(), precios, catálogo, registro
@@ -296,13 +319,14 @@ importación (nunca se mezclan monedas en un pedido).
 │   └── views/              Plantillas PHP (layout, parciales, páginas)
 ├── database/
 │   ├── schema.sql          5 tablas
-│   ├── seed.sql            28 productos demo (4 por mascota)
+│   ├── seed.sql            48 productos demo (4 por mascota + estética + granja)
 │   └── import-samples/     Ejemplos JSON y CSV
 ├── docs/                   DECISIONES.md, PRUEBAS.md, PRODUCCION.md
 ├── public/                 Document root
 │   ├── index.php           Front controller
 │   └── assets/             css/app.css, js/app.js, images/ (logo, iconos, ilustraciones demo)
-├── scripts/                install.php, create_admin.php, import_products.php, generate_demo_images.php
+├── scripts/                install.php, create_admin.php, import_products.php, generate_demo_images.php,
+│                           test_mail.php, build_infinityfree.php
 ├── storage/                cache/, logs/, mail/, ratelimit/, imports/ (sin acceso web)
 └── tests/                  run.php y fixtures
 ```
@@ -313,7 +337,7 @@ importación (nunca se mezclan monedas en un pedido).
 php tests/run.php
 ```
 
-67 pruebas unitarias sin base de datos. El checklist manual completo, con lo
+81 pruebas unitarias sin base de datos. El checklist manual completo, con lo
 verificado y lo pendiente, está en [docs/PRUEBAS.md](docs/PRUEBAS.md).
 
 ## Créditos

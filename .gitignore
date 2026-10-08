@@ -9,3 +9,6 @@
 !/storage/.htaccess
 .DS_Store
 Thumbs.db
+/public/uploads/products/*
+!/public/uploads/products/.gitkeep
+/dist/

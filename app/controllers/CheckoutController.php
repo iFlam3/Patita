@@ -241,11 +241,6 @@ final class CheckoutController extends Controller
      */
     private function shippingCountries(): array
     {
-        $countries = [];
-        foreach ((array) config('app.shop.shipping_countries', []) as $code) {
-            $countries[(string) $code] = country_name((string) $code);
-        }
-
-        return $countries;
+        return shipping_countries();
     }
 }

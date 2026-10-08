@@ -1,6 +1,6 @@
 {
     "name": "patita/tienda",
-    "description": "Tienda demo de accesorios e insumos para mascotas (PHP + MySQL, sin framework).",
+    "description": "Tienda de accesorios e insumos para mascotas (PHP + MySQL, sin framework ni dependencias).",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -11,9 +11,6 @@
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-json": "*"
-    },
-    "suggest": {
-        "phpmailer/phpmailer": "Necesario solo si MAIL_TRANSPORT=smtp (composer require phpmailer/phpmailer:^6.9)"
     },
     "config": {
         "sort-packages": true

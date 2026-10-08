@@ -11,6 +11,7 @@ use App\Controllers\CartController;
 use App\Controllers\CatalogController;
 use App\Controllers\CheckoutController;
 use App\Controllers\HomeController;
+use App\Controllers\PageController;
 use App\Controllers\PasswordResetController;
 use App\Core\Router;
 
@@ -21,6 +22,13 @@ return static function (Router $r): void {
     // Tienda
     $r->get('/', [HomeController::class, 'index']);
     $r->get('/envios-y-pagos', [HomeController::class, 'shipping']);
+    $r->get('/cuidados', [PageController::class, 'careIndex']);
+    $r->get('/cuidados/{pet:[a-z-]+}', [PageController::class, 'care']);
+    $r->get('/herramientas', [PageController::class, 'tools']);
+    $r->get('/herramientas/edad', [PageController::class, 'age']);
+    $r->get('/herramientas/alimentos-peligrosos', [PageController::class, 'toxicity']);
+    $r->get('/herramientas/peso-saludable', [PageController::class, 'weight']);
+    $r->get('/{page:acerca-de|preguntas-frecuentes|terminos|privacidad|devoluciones|contacto}', [PageController::class, 'page']);
     $r->get('/catalogo', [CatalogController::class, 'index']);
     $r->get('/mascotas', [CatalogController::class, 'pets']);
     $r->get('/mascotas/{pet:[a-z-]+}', [CatalogController::class, 'pet']);
@@ -62,6 +70,7 @@ return static function (Router $r): void {
     // Administración (rol admin)
     $r->get('/admin', [AdminController::class, 'dashboard'], ['admin']);
     $r->get('/admin/importador', [AdminController::class, 'import'], ['admin']);
+    $r->post('/admin/correo-prueba', [AdminController::class, 'testMail'], ['admin']);
     $r->get('/admin/productos', [AdminProductController::class, 'index'], ['admin']);
     $r->get('/admin/productos/nuevo', [AdminProductController::class, 'create'], ['admin']);
     $r->post('/admin/productos', [AdminProductController::class, 'store'], ['admin']);

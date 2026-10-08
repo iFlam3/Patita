@@ -160,7 +160,10 @@ $petData = $contextPet !== null ? pets()[$contextPet] : null;
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <p class="field-hint">Información general de compra. Para dudas de salud, alimentación o comportamiento, consulta a un veterinario.</p>
+            <p class="pet-guide-foot">
+                <a class="btn btn-quiet" href="<?= e(url('/cuidados/' . pets()[$contextPet]['slug'])) ?>"><?= icon('book-open', 'icon icon-sm') ?> Guía completa de cuidado</a>
+                <span class="field-hint">Información general de compra. Para dudas de salud, alimentación o comportamiento, consulta a un veterinario.</span>
+            </p>
         </section>
     <?php endif; ?>
 </div>

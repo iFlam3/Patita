@@ -14,7 +14,8 @@
                 <li><a href="<?= e(url('/catalogo')) ?>">Catálogo completo</a></li>
                 <li><a href="<?= e(url('/mascotas')) ?>">Comprar por mascota</a></li>
                 <li><a href="<?= e(url('/marcas')) ?>">Comprar por marca</a></li>
-                <li><a href="<?= e(url('/envios-y-pagos')) ?>">Envíos y pagos</a></li>
+                <li><a href="<?= e(url('/cuidados')) ?>">Guías de cuidado</a></li>
+                <li><a href="<?= e(url('/herramientas')) ?>">Herramientas</a></li>
             </ul>
         </nav>
         <nav aria-label="Tu cuenta">
@@ -31,10 +32,18 @@
                 <li><a href="<?= e(url('/carrito')) ?>">Carrito</a></li>
             </ul>
         </nav>
-        <div class="footer-note">
-            <h2 class="footer-title">Sobre esta tienda</h2>
-            <p>Proyecto de demostración con nombre provisional. Las marcas, los precios y las existencias del catálogo inicial son ficticios. No vendemos animales vivos.</p>
-        </div>
+        <nav aria-label="Información">
+            <h2 class="footer-title">Información</h2>
+            <ul>
+                <li><a href="<?= e(url('/acerca-de')) ?>">Acerca de</a></li>
+                <li><a href="<?= e(url('/preguntas-frecuentes')) ?>">Preguntas frecuentes</a></li>
+                <li><a href="<?= e(url('/envios-y-pagos')) ?>">Envíos y pagos</a></li>
+                <li><a href="<?= e(url('/devoluciones')) ?>">Cambios y devoluciones</a></li>
+                <li><a href="<?= e(url('/terminos')) ?>">Términos y condiciones</a></li>
+                <li><a href="<?= e(url('/privacidad')) ?>">Política de privacidad</a></li>
+                <li><a href="<?= e(url('/contacto')) ?>">Contacto</a></li>
+            </ul>
+        </nav>
     </div>
     <div class="container footer-bottom">
         <p>© <?= e(date('Y')) ?> <?= e(config('app.name')) ?>. Iconos de Lucide (ISC) y Tabler Icons (MIT).</p>

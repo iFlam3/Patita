@@ -40,8 +40,8 @@ como marca o dominio.
 | Versión de PHP | Objetivo PHP 8.2+. El código evita sintaxis exclusiva de 8.1+ (enums, `readonly`, `never`). | El único PHP disponible para verificar era 8.0.28 (XAMPP). Así se pudo ejecutar todo; no se probó en 8.2/8.3/8.4 (ver `PRODUCCION.md`). |
 | Estilos | CSS propio con tokens en `:root` (sin Tailwind). | No requiere compilación ni Node; el CSS entregado es el final. |
 | JavaScript | Vanilla, como mejora progresiva. | Todo funciona sin JS; con JS el catálogo filtra sin recargar, el carrito agrega sin salir de la página y los precios se formatean con `Intl.NumberFormat`. |
-| Dependencias | Ninguna obligatoria. PHPMailer solo si se usa SMTP (`composer require phpmailer/phpmailer`). | En desarrollo el correo se guarda como `.eml` en `storage/mail`. |
-| País y moneda demo | El Salvador, dólar estadounidense (USD), `es-SV`, zona `America/El_Salvador`. Se eligió un país dolarizado para que USD sea su moneda local y `Intl` muestre `$1,234.50`. | Configurables en `.env` (`APP_COUNTRY`, `APP_CURRENCY`, `APP_LOCALE`, `APP_TIMEZONE`). No se asume una moneda común para la región. |
+| Dependencias | Ninguna. El correo SMTP usa un cliente propio (STARTTLS/SSL, AUTH LOGIN). | En desarrollo el correo puede guardarse como `.eml` en `storage/mail` (`MAIL_TRANSPORT=log`). |
+| País y moneda | Venezuela, dólar estadounidense (USD), formato `es-US` (muestra `$1,234.50`; `es-VE` mostraría "USD 1.234,50"), zona `America/Caracas`. | Configurables en `.env` (`APP_COUNTRY`, `APP_CURRENCY`, `APP_LOCALE`, `APP_TIMEZONE`). No se asume una moneda común para la región. |
 | Monedas | Solo se venden productos en la moneda de la tienda. Un producto en otra moneda queda oculto e inactivo. | Así un pedido nunca mezcla monedas. |
 | Precio de origen | `source_price`/`source_currency` se guardan aparte y nunca se convierten. | El precio local lo define un administrador. |
 | Pagos | Transferencia bancaria y pago contra entrega, configurables con `PAYMENT_METHODS`. | Modalidad demostrativa: no hay cobros ni datos de tarjeta. |

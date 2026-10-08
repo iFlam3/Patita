@@ -72,5 +72,13 @@
                 <p><?= (int) ($c['created'] ?? 0) ?> creados, <?= (int) ($c['updated'] ?? 0) ?> actualizados, <?= (int) ($c['skipped'] ?? 0) ?> omitidos, <?= (int) ($c['error'] ?? 0) ?> con error.</p>
             <?php endif; ?>
         </section>
+        <section class="panel" aria-labelledby="correo-titulo">
+            <h2 id="correo-titulo"><?= icon('mail', 'icon icon-sm') ?> Correo</h2>
+            <p>Transporte: <strong><?= e(config('app.mail.transport')) ?></strong><?php if (config('app.mail.transport') === 'smtp'): ?> vía <?= e(config('app.mail.host')) ?>:<?= (int) config('app.mail.port') ?><?php endif; ?>. Remitente: <?= e(config('app.mail.from')) ?>.</p>
+            <form action="<?= e(url('/admin/correo-prueba')) ?>" method="post" data-once>
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-quiet" data-loading-text="Enviando…">Enviarme un correo de prueba</button>
+            </form>
+        </section>
     </div>
 </div>

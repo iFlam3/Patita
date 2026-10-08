@@ -15,7 +15,7 @@
     <ul class="pet-grid pet-grid-large">
         <?php foreach (pets() as $code => $pet): ?>
             <?php $count = $petCounts[$code] ?? 0; ?>
-            <li class="pet-card<?= isset($pet['subtypes']) ? ' pet-card-wide' : '' ?>">
+            <li class="pet-card">
                 <a href="<?= e(url('/mascotas/' . $pet['slug'])) ?>">
                     <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
                     <span class="pet-card-text">
