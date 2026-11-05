@@ -111,6 +111,9 @@ file_put_contents($htdocs . '/.htaccess', <<<'HTACCESS'
 # Patita en InfinityFree: htdocs es el document root.
 Options -Indexes
 DirectoryIndex index.php
+# Errores del propio servidor (archivos inexistentes, accesos bloqueados) usan la página de Patita.
+ErrorDocument 404 /index.php
+ErrorDocument 403 /index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -152,7 +155,7 @@ foreach (file(BASE_PATH . '/.env', FILE_IGNORE_NEW_LINES) ?: [] as $line) {
         $local[$m[1]] = $m[2];
     }
 }
-$keepFromLocal = '/^(APP_NAME|APP_COUNTRY|APP_LOCALE|APP_CURRENCY|APP_TIMEZONE|SHIPPING_.*|PAYMENT_METHODS|BANK_TRANSFER_DETAILS|MAX_QTY_PER_ITEM|MAIL_.*|SMTP_.*|CONTACT_.*)$/';
+$keepFromLocal = '/^(APP_NAME|APP_COUNTRY|APP_LOCALE|APP_CURRENCY|APP_TIMEZONE|SHIPPING_.*|PAYMENT_METHODS|BANK_TRANSFER_DETAILS|MAX_QTY_PER_ITEM|MAIL_.*|SMTP_.*|CONTACT_.*|GEMINI_.*|CHAT_.*)$/';
 $quote = static fn (string $v): string => preg_match('/[\s#"]/', $v) === 1 ? '"' . str_replace('"', '\"', $v) . '"' : $v;
 $overrides = [
     'APP_ENV'               => 'production',

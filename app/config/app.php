@@ -57,6 +57,13 @@ return [
         'encryption' => strtolower((string) Env::get('SMTP_ENCRYPTION', 'tls')),
     ],
 
+    // Asistente con Gemini. Sin GEMINI_API_KEY el botón del chat no aparece.
+    'chat' => [
+        'api_key'       => (string) Env::get('GEMINI_API_KEY', ''),
+        'model'         => (string) Env::get('GEMINI_MODEL', 'gemini-flash-lite-latest'),
+        'max_per_10min' => max(1, Env::int('CHAT_MAX_PER_10_MIN', 20)),
+    ],
+
     'auth' => [
         'login_max_attempts'        => max(1, Env::int('LOGIN_MAX_ATTEMPTS', 5)),
         'login_max_attempts_per_ip' => max(1, Env::int('LOGIN_MAX_ATTEMPTS_PER_IP', 20)),

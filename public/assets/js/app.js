@@ -436,5 +436,108 @@
         toggle.setAttribute('aria-pressed', show ? 'true' : 'false');
     });
 
+    // ------------------------------------------------------------ chat
+
+    (function initChat() {
+        var chat = document.querySelector('[data-chat]');
+        if (!chat || !window.fetch) {
+            return;
+        }
+        chat.hidden = false;
+        var panel = chat.querySelector('.chat-panel');
+        var toggle = chat.querySelector('[data-chat-toggle]');
+        var log = chat.querySelector('[data-chat-log]');
+        var form = chat.querySelector('[data-chat-form]');
+        var input = form.querySelector('input');
+        var button = form.querySelector('button');
+        var tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        var token = tokenMeta ? tokenMeta.content : '';
+        var busy = false;
+        var linkPattern = /(https?:\/\/[^\s)]+|\/[a-z0-9][a-z0-9\-\/?=&#.]*[a-z0-9\/])/gi;
+
+        function setOpen(open) {
+            panel.hidden = !open;
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) { input.focus(); } else { toggle.focus(); }
+        }
+
+        // Texto plano; las URL y rutas internas se vuelven enlaces sin usar innerHTML.
+        function addMessage(text, who) {
+            var p = document.createElement('p');
+            p.className = 'chat-msg chat-msg-' + who;
+            var last = 0;
+            text.replace(linkPattern, function (match, _g, offset) {
+                var before = offset === 0 ? ' ' : text.charAt(offset - 1);
+                if (match.charAt(0) === '/' && !/\s|\(/.test(before)) {
+                    return match;
+                }
+                p.appendChild(document.createTextNode(text.slice(last, offset)));
+                var a = document.createElement('a');
+                a.href = match;
+                a.textContent = match;
+                if (/^https?:/i.test(match) && match.indexOf(location.origin) !== 0) {
+                    a.target = '_blank';
+                    a.rel = 'noopener';
+                }
+                p.appendChild(a);
+                last = offset + match.length;
+                return match;
+            });
+            p.appendChild(document.createTextNode(text.slice(last)));
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;
+            return p;
+        }
+
+        function post(body) {
+            body.append('_token', token);
+            return fetch(chat.getAttribute('data-chat-url'), {
+                method: 'POST',
+                body: body,
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'fetch' }
+            }).then(function (r) {
+                return r.json().catch(function () { return { ok: false, message: 'Respuesta inválida del servidor.' }; });
+            });
+        }
+
+        toggle.addEventListener('click', function () { setOpen(panel.hidden); });
+        chat.querySelector('[data-chat-close]').addEventListener('click', function () { setOpen(false); });
+        panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { setOpen(false); } });
+
+        chat.querySelector('[data-chat-reset]').addEventListener('click', function () {
+            var body = new FormData();
+            body.append('reset', '1');
+            post(body);
+            while (log.children.length > 1) { log.removeChild(log.lastChild); }
+            input.focus();
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var text = input.value.trim();
+            if (!text || busy) { return; }
+            busy = true;
+            button.disabled = true;
+            addMessage(text, 'user');
+            input.value = '';
+            var wait = addMessage('Escribiendo…', 'bot');
+            wait.classList.add('chat-msg-wait');
+            var body = new FormData();
+            body.append('message', text);
+            post(body).then(function (data) {
+                log.removeChild(wait);
+                addMessage(data.ok ? data.reply : (data.message || 'No pude responder.'), data.ok ? 'bot' : 'error');
+            }).catch(function () {
+                log.removeChild(wait);
+                addMessage('Sin conexión. Revisa tu internet e intenta de nuevo.', 'error');
+            }).then(function () {
+                busy = false;
+                button.disabled = false;
+                input.focus();
+            });
+        });
+    }());
+
     formatPrices(document);
 }());

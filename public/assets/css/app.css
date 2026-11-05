@@ -1967,6 +1967,17 @@ input[type="file"] { padding: 10px; border: 1.5px dashed var(--line-strong); bor
 }
 .error-message { font-size: 1.125rem; }
 .error-page p { max-width: 52ch; margin-inline: auto; }
+.error-search { display: flex; max-width: 440px; margin: 16px auto 20px; }
+.error-chips ul { justify-content: center; }
+.error-page-404 { padding-top: 24px; }
+.error-dog {
+    display: block;
+    width: auto;
+    height: clamp(180px, 34vw, 280px);
+    margin: 0 auto -12px;
+    mix-blend-mode: multiply; /* el fondo blanco de la foto se funde con la página */
+}
+.error-page-404 .error-code { font-size: clamp(3.5rem, 2rem + 8vw, 6rem); }
 
 /* ---------------------------------------------------------------- pie */
 
@@ -2007,3 +2018,51 @@ input[type="file"] { padding: 10px; border: 1.5px dashed var(--line-strong); bor
 .tox-table td { font-size: 0.875rem; color: var(--carbon-soft); }
 .tox-table td .tox-badge { font-size: 0.8125rem; }
 .tox-table th[scope="row"] { min-width: 150px; }
+
+/* ---------------------------------------------------------------- chat */
+
+.chat { position: fixed; z-index: 70; right: var(--gutter); bottom: var(--gutter); display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.chat[hidden] { display: none; }
+.chat ~ .toast-region { bottom: 88px; }
+.chat-fab {
+    display: grid; place-items: center;
+    width: 56px; height: 56px;
+    border: 0; border-radius: var(--radius-pill);
+    background: var(--primary); color: var(--white);
+    box-shadow: var(--shadow-pop);
+    cursor: pointer;
+}
+.chat-fab:hover { background: var(--primary-deep); }
+.chat-fab .icon { width: 26px; height: 26px; }
+.chat-panel {
+    display: flex; flex-direction: column;
+    width: min(380px, calc(100vw - 2 * var(--gutter)));
+    height: min(540px, calc(100dvh - 110px));
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-pop);
+    overflow: hidden;
+}
+.chat-panel[hidden] { display: none; }
+.chat-head { display: flex; align-items: center; gap: 4px; padding: 10px 10px 10px 16px; background: var(--primary); color: var(--white); }
+.chat-title { flex: 1; display: flex; align-items: center; gap: 8px; margin: 0; font-weight: 700; }
+.chat-icon-btn { display: grid; place-items: center; min-width: 36px; min-height: 36px; padding: 0 10px; border: 0; border-radius: var(--radius-s); background: transparent; color: var(--white); font: inherit; font-size: 0.875rem; cursor: pointer; }
+.chat-icon-btn:hover { background: var(--primary-deep); }
+.chat-log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 14px; background: var(--mint-wash); }
+.chat-msg { max-width: 85%; margin: 0; padding: 9px 12px; border-radius: var(--radius-m); line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+.chat-msg-bot { align-self: flex-start; background: var(--white); border: 1px solid var(--line); }
+.chat-msg-user { align-self: flex-end; background: var(--primary); color: var(--white); }
+.chat-msg-error { align-self: flex-start; background: var(--red-tint); color: var(--red-ink); }
+.chat-msg-wait { color: var(--carbon-soft); font-style: italic; }
+.chat-msg a { color: var(--primary-ink); font-weight: 600; }
+.chat-note { margin: 0; padding: 6px 14px; font-size: 0.75rem; color: var(--carbon-soft); border-top: 1px solid var(--line); }
+.chat-form { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--line); }
+.chat-form input { flex: 1; min-width: 0; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--line-strong); border-radius: var(--radius-pill); font: inherit; font-size: 1rem; }
+.chat-form input:focus { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--primary); }
+.chat-send { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: var(--radius-pill); background: var(--orange); color: var(--carbon); cursor: pointer; }
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+@media (min-width: 600px) {
+    .chat { right: 24px; bottom: 24px; }
+    .chat ~ .toast-region { bottom: 96px; }
+}

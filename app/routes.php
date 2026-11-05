@@ -9,6 +9,7 @@ use App\Controllers\AdminProductController;
 use App\Controllers\AuthController;
 use App\Controllers\CartController;
 use App\Controllers\CatalogController;
+use App\Controllers\ChatController;
 use App\Controllers\CheckoutController;
 use App\Controllers\HomeController;
 use App\Controllers\PageController;
@@ -38,6 +39,7 @@ return static function (Router $r): void {
 
     // Carrito (sesión PHP)
     $r->get('/carrito', [CartController::class, 'index']);
+    $r->post('/chat', [ChatController::class, 'send']);
     $r->post('/carrito/agregar', [CartController::class, 'add']);
     $r->post('/carrito/actualizar', [CartController::class, 'update']);
     $r->post('/carrito/eliminar', [CartController::class, 'remove']);

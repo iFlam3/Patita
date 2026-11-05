@@ -202,6 +202,22 @@ Prueba la configuración:
 php scripts/test_mail.php --to=tu@correo.com
 ```
 
+## Asistente (chat con Gemini)
+
+Botón flotante en todas las páginas. Responde dudas de productos, cuidados,
+envíos y pagos, y recomienda productos del catálogo con su enlace.
+
+- Configura `GEMINI_API_KEY` en `.env` (clave de Google AI Studio). Sin clave el
+  botón no aparece. `GEMINI_MODEL` por defecto es `gemini-flash-lite-latest`; si
+  está saturado (503) o sin cuota (429) se reintenta con `gemini-flash-latest`.
+- La clave solo vive en el servidor (`app/services/GeminiClient.php`, cabecera
+  `x-goog-api-key`). El historial se guarda en la sesión (10 turnos), no lo
+  envía el navegador.
+- Protecciones: CSRF, mensajes de hasta 500 caracteres, límite por IP
+  (`CHAT_MAX_PER_10_MIN`, 20 por defecto) y respuestas en texto plano (los
+  enlaces se crean con DOM, sin `innerHTML`).
+- Las respuestas son generadas por IA y pueden equivocarse; el panel lo indica.
+
 ## Imágenes de productos
 
 Los 40 productos usan fotos de catálogo propias, en

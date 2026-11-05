@@ -44,6 +44,8 @@ $metaDescription = $description ?? 'Accesorios, alimento e insumos para perros, 
 
     <?= App\Core\View::partial('partials/footer') ?>
 
+    <?= App\Core\View::partial('partials/chat') ?>
+
     <div class="toast-region" data-toast-region aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

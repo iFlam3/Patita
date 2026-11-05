@@ -184,6 +184,14 @@ $check('peso: condición ideal conserva el peso', PetTools::healthyWeight(10, 5)
 $check('peso: delgadez no calcula cifra', PetTools::healthyWeight(10, 3)['ideal'] === null);
 $check('países: lista completa', count((array) config('catalog.countries')) > 200 && country_name('US') === 'Estados Unidos');
 
+$noKey = false;
+try {
+    (new App\Services\GeminiClient('', 'x'))->reply('s', [['role' => 'user', 'text' => 'hola']]);
+} catch (RuntimeException $e) {
+    $noKey = true;
+}
+$check('chat: sin GEMINI_API_KEY no llama a la API', $noKey);
+
 // ------------------------------------------------------------ resultado
 
 echo sprintf("%d pruebas correctas, %d fallidas.\n", $passed, count($failed));
