@@ -42,6 +42,7 @@
                 <li><a href="<?= e(url('/terminos')) ?>">Términos y condiciones</a></li>
                 <li><a href="<?= e(url('/privacidad')) ?>">Política de privacidad</a></li>
                 <li><a href="<?= e(url('/contacto')) ?>">Contacto</a></li>
+                <li><a href="<?= e(url('/creditos')) ?>">Créditos de imágenes</a></li>
             </ul>
         </nav>
     </div>

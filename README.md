@@ -2,13 +2,12 @@
 
 Tienda en línea de accesorios e insumos para mascotas pensada para
 Latinoamérica: perros, gatos, aves, peces, reptiles, caballos, animales
-pequeños (conejos, cuyos, hámsteres, chinchillas y hurones) y animales de
-granja. Incluye estética canina y felina, guías de cuidado por especie,
+pequeños (conejos, cuyos, hámsteres, chinchillas y hurones). Incluye estética canina y felina, guías de cuidado por especie,
 herramientas interactivas (edad, alimentos peligrosos y peso saludable) y
 páginas de información (acerca de, preguntas frecuentes, términos, privacidad,
 devoluciones y contacto). No vende animales vivos.
 
-> **Tienda de demostración.** Los 48 productos iniciales, sus marcas, precios
+> **Tienda de demostración.** Los 40 productos iniciales, sus marcas, precios
 > (USD) y existencias son datos de prueba. No se procesan cobros.
 
 Stack: HTML5 semántico, CSS propio (sin compilación), JavaScript vanilla,
@@ -205,15 +204,21 @@ php scripts/test_mail.php --to=tu@correo.com
 
 ## Imágenes de productos
 
-- **Sube fotos desde el panel** (editar producto → "Subir imagen"): JPG, PNG o
-  WebP de hasta 3 MB y 5000 px. Se validan por contenido, se guardan con nombre
-  aleatorio en `public/uploads/products` (sin ejecución de scripts) y se borran
-  al reemplazarlas o al eliminar el producto. Recomendado: 1200 × 900 px.
-- **O escribe una ruta o URL**: una ruta dentro de `public/` o una URL `https`.
-- **Sin imagen**: se muestra la ilustración de su mascota y categoría.
-- Usa solo fotos propias, del proveedor con permiso o de bancos con licencia
-  comercial. No copies imágenes de otras tiendas.
-- La carpeta `public/uploads/products` no se sube a Git: respáldala aparte.
+Los 40 productos usan fotos de catálogo propias, en
+`public/assets/images/products/{sku}.jpg` (originales en
+`public/assets/images/photos/Realones`). Se muestran completas sobre fondo
+blanco.
+
+Las 7 fotos de mascotas (tarjetas y guías de cuidado) también son propias del
+proyecto: `public/assets/images/photos/pet-{mascota}.jpg`.
+
+Opcional: `scripts/fetch_photos.py` busca fotos de mascotas con licencia libre en
+Wikimedia Commons usando [Scrapling](https://github.com/D4Vinci/Scrapling) y
+guarda sus créditos en `app/config/photo_credits.php` (se muestran en
+`/creditos`). No sobrescribe fotos existentes salvo con `--force`.
+
+Desde el panel también puedes subir o reemplazar la foto de cualquier producto
+(JPG, PNG o WebP de hasta 3 MB).
 
 ## Importador de productos
 
@@ -319,7 +324,7 @@ importación (nunca se mezclan monedas en un pedido).
 │   └── views/              Plantillas PHP (layout, parciales, páginas)
 ├── database/
 │   ├── schema.sql          5 tablas
-│   ├── seed.sql            48 productos demo (4 por mascota + estética + granja)
+│   ├── seed.sql            40 productos demo (4 por mascota + estética)
 │   └── import-samples/     Ejemplos JSON y CSV
 ├── docs/                   DECISIONES.md, PRUEBAS.md, PRODUCCION.md
 ├── public/                 Document root

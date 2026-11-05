@@ -18,6 +18,13 @@ $guides = (array) config('catalog.pet_guides.' . $code, []);
 
     <div class="care-layout">
         <div class="care-sections">
+            <?php $photo = pet_photo($code); $credit = photo_credit('assets/images/photos/pet-' . $code . '.jpg'); ?>
+            <?php if ($photo !== null): ?>
+                <figure class="care-photo">
+                    <img src="<?= e($photo) ?>" alt="<?= e((string) $pet['label']) ?>" width="960" height="640" decoding="async">
+                    <?php if ($credit !== null): ?><figcaption><?= App\Core\View::partial('partials/photo-credit', ['credit' => $credit]) ?></figcaption><?php endif; ?>
+                </figure>
+            <?php endif; ?>
             <?php foreach ((array) $guide['sections'] as $i => $section): ?>
                 <section class="care-section" aria-labelledby="cuidado-<?= (int) $i ?>">
                     <h2 id="cuidado-<?= (int) $i ?>"><span class="pet-guide-icon"><?= icon((string) $section['icon']) ?></span> <?= e((string) $section['title']) ?></h2>

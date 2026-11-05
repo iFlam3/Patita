@@ -15,9 +15,6 @@ $headingLevel = $headingLevel ?? 'h3';
         <img src="<?= e(product_image((string) $product['image_url'], (string) $product['pet_type'], (string) $product['category'])) ?>"
              alt="" width="400" height="300" loading="lazy" decoding="async">
     </a>
-    <?php if ($product['data_origin'] === 'demo'): ?>
-        <span class="tag tag-demo" title="Producto de demostración">Demo</span>
-    <?php endif; ?>
     <div class="product-card-body">
         <p class="product-card-pet"><?= e(pet_label((string) $product['pet_type'])) ?></p>
         <<?= $headingLevel ?> class="product-card-title">

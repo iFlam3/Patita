@@ -28,7 +28,7 @@ return static function (Router $r): void {
     $r->get('/herramientas/edad', [PageController::class, 'age']);
     $r->get('/herramientas/alimentos-peligrosos', [PageController::class, 'toxicity']);
     $r->get('/herramientas/peso-saludable', [PageController::class, 'weight']);
-    $r->get('/{page:acerca-de|preguntas-frecuentes|terminos|privacidad|devoluciones|contacto}', [PageController::class, 'page']);
+    $r->get('/{page:acerca-de|preguntas-frecuentes|terminos|privacidad|devoluciones|contacto|creditos}', [PageController::class, 'page']);
     $r->get('/catalogo', [CatalogController::class, 'index']);
     $r->get('/mascotas', [CatalogController::class, 'pets']);
     $r->get('/mascotas/{pet:[a-z-]+}', [CatalogController::class, 'pet']);

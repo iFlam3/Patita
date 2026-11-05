@@ -18,13 +18,16 @@ $origin = (string) $product['data_origin'];
     ]]) ?>
 
     <article class="product-detail">
-        <div class="product-detail-media">
-            <img src="<?= e(product_image((string) $product['image_url'], $pet, $category)) ?>"
-                 alt="Ilustración de <?= e($product['name']) ?>" width="800" height="600" decoding="async">
-            <?php if ($origin === 'demo'): ?>
-                <span class="tag tag-demo">Demo</span>
+        <?php $credit = photo_credit((string) $product['image_url']); ?>
+        <figure class="product-detail-figure">
+            <div class="product-detail-media">
+                <img src="<?= e(product_image((string) $product['image_url'], $pet, $category)) ?>"
+                     alt="<?= $credit !== null ? 'Foto de referencia de ' : 'Ilustración de ' ?><?= e($product['name']) ?>" width="800" height="600" decoding="async">
+            </div>
+            <?php if ($credit !== null): ?>
+                <figcaption class="photo-credit-line"><?= App\Core\View::partial('partials/photo-credit', ['credit' => $credit]) ?></figcaption>
             <?php endif; ?>
-        </div>
+        </figure>
 
         <div class="product-detail-info">
             <a class="product-detail-brand" href="<?= e(url('/marcas/' . slugify((string) $product['brand']))) ?>"><?= e($product['brand']) ?></a>

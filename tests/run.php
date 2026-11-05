@@ -115,7 +115,7 @@ $check('dinero: formato de respaldo incluye la moneda', str_contains(format_mone
 $check('slug: acentos y signos', slugify('Arnés acolchado, talla S') === 'arnes-acolchado-talla-s');
 $check('slug: punto final', slugify('Madriguera Co.') === 'madriguera-co');
 $check('slug: medidas con ×', slugify('Terrario 60 × 30') === 'terrario-60-x-30');
-$check('catálogo: 8 mascotas (incluye granja)', count(pets()) === 8);
+$check('catálogo: 7 mascotas', count(pets()) === 7);
 $check('catálogo: 9 categorías', count(categories()) === 9);
 $check('catálogo: slug de mascota', pet_by_slug('animales-pequenos') === 'small_pet' && pet_by_slug('dinosaurios') === null);
 $check('pedido: número con ceros', order_number(42) === 'PAT-000042');
@@ -138,7 +138,6 @@ $check('validación: teléfono demasiado corto', isset($v2->phone('phone')->erro
 
 $check('clasificador: conejo', Classifier::pet('Heno para conejos') === 'small_pet');
 $check('clasificador: inglés', Classifier::pet('Rabbit hay feeder') === 'small_pet');
-$check('clasificador: granja', Classifier::pet('Comedero para gallinas ponedoras') === 'farm');
 $check('clasificador: no adivina', Classifier::pet('Producto genérico') === null);
 $check('clasificador: categoría', Classifier::category('Dog Feeding Mats') === 'bowls_feeders');
 $check('clasificador: no confunde "cat" dentro de otra palabra', Classifier::pet('Catalogue stand') === null);

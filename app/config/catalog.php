@@ -48,18 +48,6 @@ return [
             'icon'  => 'horse',
             'intro' => 'Cepillos, cascos, cabezadas y cubos para el cuidado equino.',
         ],
-        'farm' => [
-            'label' => 'Granja',
-            'slug'  => 'granja',
-            'icon'  => 'pig',
-            'intro' => 'Alimento, comederos, bebederos y nidales para gallinas, cerdos, cabras, ovejas y otros animales de granja.',
-            'subtypes' => [
-                'gallina' => 'Gallinas',
-                'cerdo'   => 'Cerdos',
-                'cabra'   => 'Cabras',
-                'oveja'   => 'Ovejas',
-            ],
-        ],
         'small_pet' => [
             'label' => 'Animales pequeños',
             'slug'  => 'animales-pequenos',
@@ -142,14 +130,6 @@ return [
              'text' => 'La cabezada debe ajustarse sin apretar. Revisa hebillas, costuras y desgaste antes de cada uso.'],
             ['title' => 'Agua y alimento', 'category' => 'bowls_feeders',
              'text' => 'Mantén cubos y bebederos limpios, con agua fresca siempre disponible.'],
-        ],
-        'farm' => [
-            ['title' => 'Alimentación', 'category' => 'food',
-             'text' => 'Usa alimento formulado para la especie y su etapa (por ejemplo, gallinas ponedoras o de engorde) y sigue las cantidades de la etiqueta.'],
-            ['title' => 'Agua', 'category' => 'bowls_feeders',
-             'text' => 'Mantén bebederos limpios y con agua fresca. Revisa que no se volteen ni se ensucien con cama o tierra.'],
-            ['title' => 'Corral y nidales', 'category' => 'beds_habitats',
-             'text' => 'Ubica los nidales en un lugar tranquilo y con poca luz. Mantén el corral seco y protegido de depredadores.'],
         ],
         'small_pet' => [
             ['title' => 'Alimentación', 'category' => 'food',

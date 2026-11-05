@@ -22,6 +22,7 @@ final class PageController extends Controller
         'privacidad'          => ['view' => 'pages/privacy', 'title' => 'Política de privacidad'],
         'devoluciones'        => ['view' => 'pages/returns', 'title' => 'Cambios y devoluciones'],
         'contacto'            => ['view' => 'pages/contact', 'title' => 'Contacto'],
+        'creditos'            => ['view' => 'pages/credits', 'title' => 'Créditos de imágenes'],
     ];
 
     /**
@@ -113,15 +114,23 @@ final class PageController extends Controller
      */
     public function toxicity(Request $request, array $params): Response
     {
-        $pet = $request->query('mascota');
-        $food = $request->query('alimento');
-        $result = ($pet !== '' && $food !== '') ? PetTools::toxicity($pet, $food) : null;
+        $pet = $request->query('mascota', 'dog');
+        if (!isset(pets()[$pet])) {
+            $pet = 'dog';
+        }
+
+        // Tabla completa de la mascota: primero lo tóxico, luego lo no recomendado.
+        $order = ['toxic' => 0, 'avoid' => 1, 'nodata' => 2];
+        $rows = [];
+        foreach (array_keys((array) config('tools.foods')) as $food) {
+            $rows[] = PetTools::toxicity($pet, $food);
+        }
+        usort($rows, static fn (array $a, array $b): int => $order[$a['level']] <=> $order[$b['level']]);
 
         return $this->view('tools/toxicity', [
-            'title'  => 'Alimentos peligrosos',
-            'pet'    => isset(pets()[$pet]) ? $pet : '',
-            'food'   => array_key_exists($food, (array) config('tools.foods')) ? $food : '',
-            'result' => $result,
+            'title' => 'Alimentos peligrosos',
+            'pet'   => $pet,
+            'rows'  => $rows,
         ]);
     }
 

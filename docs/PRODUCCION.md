@@ -98,8 +98,10 @@ agregar una tabla. Límites por defecto: 5 intentos fallidos por correo + IP y
 
 - **Marcas ficticias** en el catálogo demo. Reemplázalas por marcas reales con
   permiso de sus titulares o de tus proveedores.
-- **Ilustraciones de demostración**: hay que sustituirlas por fotos propias o
-  con licencia.
+- **Fotos de Wikimedia Commons**: son de referencia y no muestran el producto
+  exacto. Las CC BY y CC BY-SA exigen mantener la atribución (`/creditos` y pie
+  de cada foto). Para vender de verdad, reemplázalas por fotos propias o del
+  proveedor.
 - **Nombre y logotipo provisionales**: verificar marca y dominio antes de usar.
 - **Fuente Archivo desde Google Fonts**: implica una solicitud a Google en cada
   visita. Para privacidad y rendimiento, alojarla en `public/assets/fonts`

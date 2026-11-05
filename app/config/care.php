@@ -198,28 +198,4 @@ return [
         ],
     ],
 
-    'farm' => [
-        'summary' => 'Gallinas, cerdos, cabras y ovejas necesitan alimento adecuado, agua limpia, refugio seco y protección frente a depredadores.',
-        'sections' => [
-            ['icon' => 'wheat', 'title' => 'Alimentación e hidratación', 'items' => [
-                'Usa alimento formulado para la especie y su etapa (crecimiento, postura, engorde).',
-                'El agua limpia debe estar disponible siempre; revisa bebederos a diario.',
-                'Cabras y ovejas son rumiantes: el forraje es la base de su dieta.',
-            ]],
-            ['icon' => 'house', 'title' => 'Corral y refugio', 'items' => [
-                'Ofrece un refugio seco, ventilado y protegido del sol y la lluvia.',
-                'Cerca y techa el área de las gallinas para protegerlas de depredadores.',
-                'Las ponedoras usan nidales en lugares tranquilos y con poca luz.',
-            ]],
-            ['icon' => 'scissors', 'title' => 'Higiene', 'items' => [
-                'Retira el estiércol y cambia la cama con regularidad.',
-                'Revisa pezuñas en cabras y ovejas.',
-            ]],
-            ['icon' => 'stethoscope', 'title' => 'Salud preventiva', 'items' => [
-                'Consulta a un veterinario de animales de granja sobre vacunas y desparasitación.',
-                'Infórmate sobre los requisitos sanitarios y de registro de tu país o municipio.',
-                'Aísla a los animales nuevos o enfermos antes de juntarlos con el grupo.',
-            ]],
-        ],
-    ],
 ];

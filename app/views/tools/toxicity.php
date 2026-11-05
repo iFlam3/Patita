@@ -1,74 +1,70 @@
 <?php
 /**
- * @var string                    $pet
- * @var string                    $food
- * @var array<string, string>|null $result
+ * @var string                            $pet
+ * @var list<array<string, string>>       $rows
  */
-$foods = (array) config('tools.foods');
-$levels = (array) config('tools.levels');
+$petName = mb_strtolower(pet_label($pet), 'UTF-8');
+$counts = array_count_values(array_column($rows, 'level'));
+$known = array_values(array_filter($rows, static fn (array $r): bool => $r['level'] !== 'nodata'));
+$unknown = array_column(array_filter($rows, static fn (array $r): bool => $r['level'] === 'nodata'), 'food');
 ?>
 <div class="container page page-narrow">
     <?= App\Core\View::partial('partials/breadcrumbs', ['items' => [['Herramientas', '/herramientas'], ['Alimentos peligrosos', null]]]) ?>
     <header class="page-head">
         <div>
             <h1>Alimentos peligrosos para mascotas</h1>
-            <p class="page-intro">Consulta el nivel de riesgo de alimentos de uso común según la especie.</p>
+            <p class="page-intro">Elige tu mascota para ver qué alimentos de uso común son tóxicos o no recomendados.</p>
         </div>
     </header>
 
     <p class="emergency"><?= icon('circle-alert') ?> <span><strong>En caso de ingestión</strong>, acude de inmediato a un veterinario o a un centro de toxicología animal, aunque no haya síntomas.</span></p>
 
-    <form class="panel tool-form" action="<?= e(url('/herramientas/alimentos-peligrosos')) ?>#resultado" method="get">
-        <div class="field-row">
-            <div class="field">
-                <label for="t-mascota">Mascota</label>
-                <select id="t-mascota" name="mascota" required>
-                    <option value="">Elige una mascota</option>
-                    <?php foreach (pets() as $code => $info): ?>
-                        <option value="<?= e($code) ?>"<?= $pet === $code ? ' selected' : '' ?>><?= e($info['label']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="field">
-                <label for="t-alimento">Alimento</label>
-                <select id="t-alimento" name="alimento" required>
-                    <option value="">Elige un alimento</option>
-                    <?php foreach ($foods as $key => $info): ?>
-                        <option value="<?= e($key) ?>"<?= $food === $key ? ' selected' : '' ?>><?= e($info['label']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Consultar</button>
-    </form>
+    <nav class="category-chips" aria-label="Elige tu mascota">
+        <ul>
+            <?php foreach (pets() as $code => $info): ?>
+                <li>
+                    <a class="chip-link<?= $pet === $code ? ' is-active' : '' ?>" href="<?= e(url('/herramientas/alimentos-peligrosos', ['mascota' => $code])) ?>#tabla-alimentos"<?= $pet === $code ? ' aria-current="true"' : '' ?>>
+                        <?= icon((string) $info['icon'], 'icon icon-sm') ?> <?= e($info['label']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
 
-    <div id="resultado">
-        <?php if ($result !== null): ?>
-            <section class="tool-result tool-result-<?= e($result['class']) ?>" role="status">
-                <p class="tool-result-label"><?= e($result['food']) ?> para <?= e(mb_strtolower(pet_label($pet), 'UTF-8')) ?></p>
-                <p class="tool-result-value"><?= e($result['label']) ?></p>
-                <p><?= e($result['note']) ?></p>
-                <?php if ($result['level'] === 'nodata'): ?>
-                    <p>La ausencia de datos no implica que sea seguro. No se recomienda ofrecerlo sin consultar a un veterinario.</p>
-                <?php endif; ?>
-            </section>
+    <section class="panel" aria-labelledby="tabla-alimentos">
+        <h2 id="tabla-alimentos"><?= icon((string) pets()[$pet]['icon'], 'icon icon-sm') ?> Alimentos para <?= e($petName) ?></h2>
+        <?php if ($pet === 'fish'): ?>
+            <p class="emergency"><?= icon('info') ?> <span>Los peces deben comer solo alimento formulado para su especie (escamas, gránulos, congelados o vivos). No les ofrezcas comida humana: además de no ser apta, los restos contaminan el agua y elevan el amoníaco.</span></p>
         <?php endif; ?>
-    </div>
-
-    <?php if ($pet !== ''): ?>
-        <section class="panel" aria-labelledby="tabla-alimentos">
-            <h2 id="tabla-alimentos">Todos los alimentos para <?= e(mb_strtolower(pet_label($pet), 'UTF-8')) ?></h2>
-            <ul class="tox-list">
-                <?php foreach ($foods as $key => $info): ?>
-                    <?php $level = (string) ($info['levels'][$pet] ?? 'nodata'); ?>
-                    <li>
-                        <span><?= e($info['label']) ?></span>
-                        <span class="tox-badge tox-<?= e($levels[$level]['class']) ?>"><?= e($levels[$level]['short']) ?></span>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    <?php endif; ?>
+        <?php if ($known !== []): ?>
+        <p class="field-hint">
+            <?= (int) ($counts['toxic'] ?? 0) ?> tóxicos y <?= (int) ($counts['avoid'] ?? 0) ?> no recomendados para esta especie.
+        </p>
+        <div class="table-wrap">
+            <table class="table tox-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Alimento</th>
+                        <th scope="col">Riesgo</th>
+                        <th scope="col">Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($known as $row): ?>
+                        <tr>
+                            <th scope="row"><?= e($row['food']) ?></th>
+                            <td><span class="tox-badge tox-<?= e($row['class']) ?>"><?= e($row['label']) ?></span></td>
+                            <td><?= e($row['note']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php endif; ?>
+        <?php if ($unknown !== []): ?>
+            <p class="field-hint"><strong>Sin datos verificados para esta especie:</strong> <?= e(implode(', ', $unknown)) ?>. Que no aparezcan en la tabla no significa que sean seguros: no los ofrezcas sin consultar a un veterinario.</p>
+        <?php endif; ?>
+    </section>
 
     <p class="field-hint">Basado en las listas públicas de alimentos peligrosos para mascotas de la ASPCA (Animal Poison Control Center) y fuentes veterinarias de divulgación. La lista no es exhaustiva: muchos otros alimentos, plantas y productos del hogar también son peligrosos.</p>
 </div>

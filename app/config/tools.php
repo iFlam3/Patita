@@ -18,7 +18,7 @@ return [
         'chocolate' => [
             'label' => 'Chocolate y cacao',
             'note'  => 'Contiene teobromina y cafeína. El chocolate oscuro, el de repostería y el cacao en polvo son los más concentrados.',
-            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic', 'farm' => 'toxic'],
+            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'reptile' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic'],
         ],
         'uvas' => [
             'label' => 'Uvas y pasas',
@@ -28,32 +28,32 @@ return [
         'cebolla' => [
             'label' => 'Cebolla, ajo, puerro y cebollín',
             'note'  => 'Crudos, cocidos o en polvo pueden dañar los glóbulos rojos. Revisa caldos, salsas y condimentos.',
-            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'horse' => 'toxic', 'bird' => 'toxic', 'small_pet' => 'toxic', 'farm' => 'toxic'],
+            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'horse' => 'toxic', 'bird' => 'toxic', 'small_pet' => 'toxic', 'reptile' => 'avoid'],
         ],
         'xilitol' => [
             'label' => 'Xilitol (edulcorante)',
-            'note'  => 'Está en chicles, dulces sin azúcar y algunas mantequillas de maní. En perros puede provocar una caída brusca de azúcar en sangre.',
-            'levels' => ['dog' => 'toxic', 'cat' => 'avoid'],
+            'note'  => 'Está en chicles, dulces sin azúcar y algunas mantequillas de maní. En perros puede provocar una caída brusca de azúcar en sangre; en conejos estimula la liberación de insulina y en aves hay casos reportados.',
+            'levels' => ['dog' => 'toxic', 'cat' => 'avoid', 'bird' => 'avoid', 'small_pet' => 'avoid'],
         ],
         'aguacate' => [
             'label' => 'Aguacate',
-            'note'  => 'Contiene persina. En aves, conejos, cuyos, caballos, cabras y ovejas se considera especialmente peligroso.',
-            'levels' => ['bird' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic', 'farm' => 'toxic', 'dog' => 'avoid', 'cat' => 'avoid'],
+            'note'  => 'Contiene persina. En aves, conejos, cuyos, caballos, cabras y ovejas se considera especialmente peligroso. En reptiles no hay una dosis tóxica estudiada y los veterinarios recomiendan tratarlo como tóxico.',
+            'levels' => ['bird' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic', 'reptile' => 'toxic', 'dog' => 'avoid', 'cat' => 'avoid'],
         ],
         'alcohol' => [
             'label' => 'Bebidas alcohólicas',
             'note'  => 'Incluye alimentos preparados con alcohol. Incluso cantidades pequeñas afectan a animales de poco peso.',
-            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'reptile' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic', 'farm' => 'toxic'],
+            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'reptile' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic'],
         ],
         'cafeina' => [
             'label' => 'Café, té y bebidas energéticas',
             'note'  => 'La cafeína es un estimulante que afecta el corazón y el sistema nervioso.',
-            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic', 'farm' => 'toxic'],
+            'levels' => ['dog' => 'toxic', 'cat' => 'toxic', 'bird' => 'toxic', 'reptile' => 'toxic', 'horse' => 'toxic', 'small_pet' => 'toxic'],
         ],
         'macadamia' => [
             'label' => 'Nueces de macadamia',
-            'note'  => 'En perros se asocian a debilidad, temblores y fiebre.',
-            'levels' => ['dog' => 'toxic'],
+            'note'  => 'En perros se asocian a debilidad, temblores y fiebre. En gatos la toxicidad no está documentada; por precaución, evítalas.',
+            'levels' => ['dog' => 'toxic', 'cat' => 'avoid'],
         ],
         'masa' => [
             'label' => 'Masa cruda con levadura',
@@ -62,8 +62,8 @@ return [
         ],
         'lacteos' => [
             'label' => 'Leche y lácteos',
-            'note'  => 'Muchos perros y gatos adultos digieren mal la lactosa y pueden tener malestar digestivo.',
-            'levels' => ['dog' => 'avoid', 'cat' => 'avoid'],
+            'note'  => 'Muchos perros, gatos y conejos adultos digieren mal la lactosa; las aves no producen lactasa. Puede causar gases y diarrea.',
+            'levels' => ['dog' => 'avoid', 'cat' => 'avoid', 'bird' => 'avoid', 'small_pet' => 'avoid'],
         ],
         'huesos' => [
             'label' => 'Huesos cocidos',

@@ -120,10 +120,23 @@ Consecuencias:
   (`IMPORT_USE_REMOTE_IMAGES=false`) por defecto, no usa el stock externo y deja
   cada producto inactivo con precio 0 hasta su revisión.
 
+### Fotos (actualización del 4 de noviembre de 2026)
+
+Las fotos de mascotas se obtuvieron de Wikimedia Commons con
+`scripts/fetch_photos.py` (Scrapling sobre la API pública), solo con licencias
+CC0, dominio público, CC BY o CC BY-SA, y con atribución visible en cada foto y
+en `/creditos`. No se usaron fotos de petstore.direct, PetSmart ni de otras
+tiendas. Los productos usan fotos de catálogo aportadas para el proyecto
+(`public/assets/images/products`). La sección Granja se eliminó el 5 de
+noviembre de 2026; la paleta volvió al verde #218739 con naranja #FF9F1C como
+acento.
+
 ## 5. Identidad visual
 
-Paleta del brief (el verde es una propuesta de diseño y el rojo una elección del
-proyecto; ninguno se presenta como código oficial de Dog Chow ni de Purina):
+Paleta actual (4 de noviembre de 2026): índigo #3D348B (principal), turquesa
+#2EC4B6 (acentos), naranja #FF9F1C (promociones y llamados a la acción), menta
+#CBF3F0 (fondos) y blanco; los valores de contraste están en `app.css`. La tabla
+siguiente corresponde a la paleta verde original del brief:
 
 | Token | Valor | Uso |
 |-------|-------|-----|

@@ -12,11 +12,11 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
         <div class="hero-copy">
             <h1 class="hero-title">Todo para tu mascota, sea cual sea.</h1>
             <p class="hero-lead">
-                Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos, animales pequeños y de granja.
+                Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos y animales pequeños.
                 Pagas por transferencia o al recibir.
             </p>
             <div class="hero-actions">
-                <a class="btn btn-light btn-lg" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
+                <a class="btn btn-accent btn-lg" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
                 <a class="btn btn-outline-light btn-lg" href="#mascotas">Elegir mascota</a>
             </div>
         </div>
@@ -46,6 +46,8 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
                 <?php $count = $petCounts[$code] ?? 0; ?>
                 <li class="pet-card">
                     <a href="<?= e(url('/mascotas/' . $pet['slug'])) ?>">
+                        <?php $photo = pet_photo($code); ?>
+                        <?php if ($photo !== null): ?><img class="pet-card-photo" src="<?= e($photo) ?>" alt="" width="400" height="300" loading="lazy" decoding="async"><?php endif; ?>
                         <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
                         <span class="pet-card-text">
                             <span class="pet-card-name"><?= e($pet['label']) ?></span>
@@ -159,8 +161,8 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
             </li>
             <li>
                 <?= icon('paw-print', 'icon icon-lg') ?>
-                <h3>Ocho tipos de mascota</h3>
-                <p>De perros y gatos a reptiles, caballos, conejos y animales de granja.</p>
+                <h3>Siete tipos de mascota</h3>
+                <p>De perros y gatos a reptiles, caballos, conejos y hurones.</p>
             </li>
             <li>
                 <?= icon('info', 'icon icon-lg') ?>

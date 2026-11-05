@@ -24,6 +24,7 @@ function &config_store(): array
             'catalog' => require BASE_PATH . '/app/config/catalog.php',
             'care'    => require BASE_PATH . '/app/config/care.php',
             'tools'   => require BASE_PATH . '/app/config/tools.php',
+            'photos'  => is_file(BASE_PATH . '/app/config/photo_credits.php') ? require BASE_PATH . '/app/config/photo_credits.php' : [],
             'runtime' => ['base_path' => '', 'https' => false],
         ];
     }
@@ -138,6 +139,28 @@ function product_image(?string $imageUrl, string $petType = '', string $category
     }
 
     return asset('assets/images/demo/placeholder.svg');
+}
+
+/**
+ * Foto de una mascota (assets/images/photos/pet-{código}.jpg) o null si no hay.
+ */
+function pet_photo(string $code): ?string
+{
+    $path = 'assets/images/photos/pet-' . $code . '.jpg';
+
+    return is_file(PUBLIC_PATH . '/' . $path) ? asset($path) : null;
+}
+
+/**
+ * Crédito de una foto con licencia libre (ver app/config/photo_credits.php).
+ *
+ * @return array<string, string>|null
+ */
+function photo_credit(string $path): ?array
+{
+    $credit = config('photos')[$path] ?? null;
+
+    return is_array($credit) ? $credit : null;
 }
 
 function icon(string $name, string $class = 'icon'): string

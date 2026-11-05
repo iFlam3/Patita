@@ -136,7 +136,7 @@ del carrito, calculadoras y países). Resultado: 81 correctas.
 
 | Prueba | Esperado | Estado |
 |--------|----------|--------|
-| Páginas nuevas (cuidados, herramientas, acerca de, preguntas frecuentes, términos, privacidad, devoluciones, contacto, granja) | 200 | Verificado |
+| Páginas nuevas (cuidados, herramientas, acerca de, preguntas frecuentes, términos, privacidad, devoluciones, contacto) | 200 | Verificado |
 | Guía de cuidado inexistente | 404 | Verificado |
 | Edad: perro grande de 7 años y 6 meses | ≈ 57 años humanos | Verificado |
 | Edad con texto inválido | Mensaje de error | Verificado |

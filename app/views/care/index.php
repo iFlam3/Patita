@@ -12,7 +12,9 @@
             <?php $guide = (array) config('care.' . $code, []); ?>
             <li class="pet-card">
                 <a href="<?= e(url('/cuidados/' . $pet['slug'])) ?>">
-                    <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
+                    <?php $photo = pet_photo($code); ?>
+                        <?php if ($photo !== null): ?><img class="pet-card-photo" src="<?= e($photo) ?>" alt="" width="400" height="300" loading="lazy" decoding="async"><?php endif; ?>
+                        <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
                     <span class="pet-card-text">
                         <span class="pet-card-name"><?= e($pet['label']) ?></span>
                         <span class="pet-card-sub"><?= e((string) ($guide['summary'] ?? '')) ?></span>
