@@ -19,7 +19,7 @@ final class GeminiClient
     public function __construct(
         private string $apiKey,
         private string $model,
-        private int $timeout = 25,
+        private int $timeout = 12, // dos intentos caben en el límite de 30 s de PHP en hosting gratuito
     ) {
     }
 
@@ -85,7 +85,7 @@ final class GeminiClient
             CURLOPT_POSTFIELDS     => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
             CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'x-goog-api-key: ' . $this->apiKey],
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_TIMEOUT        => $this->timeout,
         ]);
         $body = curl_exec($ch);

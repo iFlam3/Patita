@@ -4,7 +4,7 @@ if ((string) config('app.chat.api_key', '') === '') {
     return;
 }
 ?>
-<div class="chat" data-chat data-chat-url="<?= e(url('/chat')) ?>" hidden>
+<div class="chat" data-chat data-chat-url="<?= e(url('/asistente/mensaje')) ?>" hidden>
     <section class="chat-panel" id="chat-panel" role="dialog" aria-labelledby="chat-title" hidden>
         <header class="chat-head">
             <p class="chat-title" id="chat-title"><?= icon('paw-print', 'icon icon-sm') ?> Pati, asistente de Patita</p>

@@ -13,7 +13,7 @@ use App\Services\RateLimiter;
 use Throwable;
 
 /**
- * Asistente de la tienda (POST /chat, JSON). El historial se guarda en la
+ * Asistente de la tienda (POST /asistente/mensaje, JSON; /chat lo bloquea el hosting gratuito). El historial se guarda en la
  * sesión del visitante, no lo envía el navegador, para que no se pueda
  * inyectar mensajes falsos del asistente.
  */
@@ -30,7 +30,7 @@ final class ChatController extends Controller
     {
         $c = (array) config('app.chat');
         if ((string) $c['api_key'] === '') {
-            return Response::json(['ok' => false, 'message' => 'El asistente no está disponible.'], 503);
+            return Response::json(['ok' => false, 'message' => 'El asistente no está disponible.']);
         }
 
         if ($request->input('reset') === '1') {
@@ -62,7 +62,7 @@ final class ChatController extends Controller
         } catch (Throwable $e) {
             log_message('app', 'Chat: ' . $e->getMessage());
 
-            return Response::json(['ok' => false, 'message' => 'El asistente no pudo responder ahora. Intenta más tarde.'], 502);
+            return Response::json(['ok' => false, 'message' => 'El asistente no pudo responder ahora. Intenta más tarde.']);
         }
         if ($reply === '') {
             $reply = 'No tengo una respuesta para eso. ¿Puedes preguntarlo de otra forma?';
