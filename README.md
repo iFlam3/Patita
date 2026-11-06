@@ -21,7 +21,7 @@ PHP sin framework, MySQL/MariaDB con PDO y consultas preparadas. Exactamente
 - [Instalación](#instalación)
 - [Servidor web](#servidor-web)
 - [Correo](#correo)
-- [Importador de productos](#importador-de-productos)
+- [Métricas y proyección de ventas](#métricas-y-proyección-de-ventas)
 - [Configuración regional](#configuración-regional)
 - [Seguridad](#seguridad)
 - [Estructura](#estructura)
@@ -42,10 +42,7 @@ PHP sin framework, MySQL/MariaDB con PDO y consultas preparadas. Exactamente
 | Registro, login, logout, límite de intentos | Sí | Sí |
 | Recuperación de contraseña (token hasheado, un solo uso) | Sí | Sí, con transporte `log` |
 | Mi cuenta (perfil, contraseña, historial) | Sí | Sí |
-| Administración (productos, pedidos, importador) | Sí | Sí |
-| Importador JSON/CSV | Sí | Sí |
-| Importador web petstore.direct | Sí, deshabilitado | Extracción verificada en 1 ficha; no se importó nada |
-| Importador web PetSmart | Sí, deshabilitado | **No verificado** (sus términos lo impiden) |
+| Administración (productos, pedidos, métricas) | Sí | Sí |
 | Envío por SMTP | Sí | Sí, con Gmail (correo de prueba aceptado) |
 | PHP 8.2+ / MySQL 8 | Objetivo | **Pendiente**: se verificó en PHP 8.0.28 y MariaDB 10.4.28 |
 
@@ -236,50 +233,34 @@ guarda sus créditos en `app/config/photo_credits.php` (se muestran en
 Desde el panel también puedes subir o reemplazar la foto de cualquier producto
 (JPG, PNG o WebP de hasta 3 MB).
 
-## Importador de productos
+## Métricas y proyección de ventas
 
-Solo por línea de comandos; nunca se ejecuta durante la navegación. El panel
-(`/admin/importador`) muestra instrucciones, el estado de cada fuente y los
-reportes guardados en `storage/imports`.
+El inicio del panel (`/admin`) muestra, para los últimos 30 días, 13 semanas o
+12 meses: ingresos con variación frente al periodo anterior, pedidos, ticket
+promedio, productos más vendidos, ingresos por mascota y pedidos por estado.
+Los pedidos cancelados no cuentan.
 
-**JSON o CSV (recomendado).** Identifica productos por SKU (crea o actualiza).
-Ejemplos en `database/import-samples/`.
+La proyección usa **regresión lineal simple** (mínimos cuadrados,
+`app/services/SalesForecast.php`): `ingresos = a + b × periodo`, ajustada sobre
+los periodos completos (el periodo en curso no entra, y tampoco los anteriores a
+la primera venta). Se muestran la pendiente `b`, el R² y los 3 periodos
+siguientes. Las gráficas son SVG generado en PHP: sin librerías ni JavaScript.
 
-```bash
-php scripts/import_products.php --file=database/import-samples/productos-ejemplo.csv --dry-run
-```
-
-```bash
-php scripts/import_products.php --file=database/import-samples/productos-ejemplo.json
-```
-
-Columnas: `sku, name, brand, pet_type, category, description, price, currency,
-stock, image_url, data_origin, active` y opcionalmente `source_url,
-source_site, source_price, source_currency`. `pet_type` y `category` aceptan
-la clave (`dog`, `food`) o el slug (`perros`, `alimento`). El CSV puede usar `,`
-o `;`.
-
-**Fuentes web.** Se revisaron robots.txt y términos de uso de petstore.direct y
-petsmart.com (ver [docs/DECISIONES.md](docs/DECISIONES.md#4-revisión-de-las-fuentes-de-datos-7-de-octubre-de-2026)).
-Ambas restringen la reutilización comercial de su contenido, por lo que vienen
-**deshabilitadas** y el catálogo inicial es 100 % demo.
+Para probarlo con datos, genera ventas **ficticias** (unos 390 pedidos en 6
+meses, con tendencia creciente):
 
 ```bash
-php scripts/import_products.php --list-sources
+php scripts/seed_sales_demo.php --apply
 ```
+
+Eso también escribe `database/sales_demo.sql`, que puedes importar en
+phpMyAdmin (por ejemplo, en InfinityFree). Los pedidos quedan a nombre de
+`ventas-demo@patita.test` y su `checkout_token` empieza por `demo`. Para
+borrarlos:
 
 ```bash
-php scripts/import_products.php --source=petstore_direct --check-robots --url=https://www.petstore.direct/products/ejemplo
+php scripts/seed_sales_demo.php --clear
 ```
-
-Solo con autorización escrita de la fuente: agrega su clave a
-`IMPORT_ALLOWED_SOURCES` y ejecuta, por ejemplo,
-`--source=petstore_direct --urls-file=urls.txt --limit=10 --dry-run`. El
-importador consulta robots.txt, usa un User-Agent descriptivo, pausa entre
-solicitudes, caché y reintentos limitados, se detiene ante CAPTCHA o bloqueos,
-prioriza JSON-LD `Product`, deduplica por fuente + URL y crea los productos
-inactivos, con precio 0 y stock 0 hasta que un administrador los revise. No
-convierte precios externos ni usa el stock externo.
 
 ## Configuración regional
 
@@ -334,21 +315,19 @@ importación (nunca se mezclan monedas en un pedido).
 │   ├── controllers/        Tienda, carrito, checkout, autenticación, cuenta, administración
 │   ├── middleware/         Auth (auth, admin, guest)
 │   ├── models/             User, Product, Order, PasswordResetToken
-│   ├── services/           Auth, Cart, CheckoutService, Mailer, RateLimiter
-│   │   └── import/         HttpClient, RobotsTxt, RobotsGuard, JsonLdProductExtractor,
-│   │                       adaptadores por sitio, FileImportReader, ProductImporter, ImportReport
+│   ├── services/           Auth, Cart, CheckoutService, Mailer, RateLimiter, SalesForecast, GeminiClient
 │   └── views/              Plantillas PHP (layout, parciales, páginas)
 ├── database/
 │   ├── schema.sql          5 tablas
 │   ├── seed.sql            40 productos demo (4 por mascota + estética)
-│   └── import-samples/     Ejemplos JSON y CSV
+│   └── sales_demo.sql      Ventas ficticias para las métricas (opcional)
 ├── docs/                   DECISIONES.md, PRUEBAS.md, PRODUCCION.md
 ├── public/                 Document root
 │   ├── index.php           Front controller
 │   └── assets/             css/app.css, js/app.js, images/ (logo, iconos, ilustraciones demo)
-├── scripts/                install.php, create_admin.php, import_products.php, generate_demo_images.php,
+├── scripts/                install.php, create_admin.php, seed_sales_demo.php, generate_demo_images.php,
 │                           test_mail.php, build_infinityfree.php
-├── storage/                cache/, logs/, mail/, ratelimit/, imports/ (sin acceso web)
+├── storage/                logs/, mail/, ratelimit/ (sin acceso web)
 └── tests/                  run.php y fixtures
 ```
 

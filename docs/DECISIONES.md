@@ -88,8 +88,7 @@ El script completo está en `database/schema.sql`.
   del último pedido.
 - **El carrito vive en la sesión PHP**: se pierde al cerrar sesión o al vencer
   la sesión, y no reserva stock (el stock se valida y descuenta al confirmar).
-- **El límite de intentos y los reportes del importador usan archivos**
-  (`storage/ratelimit`, `storage/imports`) para no agregar tablas.
+- **El límite de intentos usa archivos** (`storage/ratelimit`) para no agregar tablas.
 - **No hay verificación de propiedad del correo** (enlace de confirmación al
   registrarse): requeriría una columna o tabla adicional. Se valida formato y
   unicidad. Ver `PRODUCCION.md`.
@@ -103,22 +102,17 @@ El script completo está en `database/schema.sql`.
 
 | Fuente | robots.txt | Términos de uso | Decisión |
 |--------|-----------|-----------------|----------|
-| www.petstore.direct (Shopify; PetStore.Direct LLC, Florida, EE. UU.) | Permite `/products/` para `User-agent: *`; bloquea carrito, cuenta, búsqueda, colecciones ordenadas o filtradas y `/policies/`. | Prohíben copiar, reproducir o republicar contenido con fines públicos o comerciales sin consentimiento previo por escrito. | Adaptador construido y **verificado técnicamente** sobre una ficha (JSON-LD `Product`). **Deshabilitado**: no se importó ningún producto. |
-| www.petsmart.com | Bloquea toda URL con parámetros (`/*?`), `/search`, `/cart`, `/checkout`. | Prohíben acceder al sitio para construir un servicio similar o competitivo, descargar o recopilar contenido y explotarlo comercialmente. | **No se inspeccionaron fichas.** Adaptador entregado como **no verificado**, solo JSON-LD genérico, sin selectores HTML. **Deshabilitado.** |
+| www.petstore.direct (Shopify; PetStore.Direct LLC, Florida, EE. UU.) | Permite `/products/` para `User-agent: *`; bloquea carrito, cuenta, búsqueda, colecciones ordenadas o filtradas y `/policies/`. | Prohíben copiar, reproducir o republicar contenido con fines públicos o comerciales sin consentimiento previo por escrito. | Se construyó un adaptador, verificado sobre una ficha; nunca se habilitó y ya se retiró. |
+| www.petsmart.com | Bloquea toda URL con parámetros (`/*?`), `/search`, `/cart`, `/checkout`. | Prohíben acceder al sitio para construir un servicio similar o competitivo, descargar o recopilar contenido y explotarlo comercialmente. | **No se inspeccionaron fichas.** No se construyó un importador para esta fuente. |
 
 Consecuencias:
 
-- El catálogo inicial (28 productos) es **100 % de demostración**
-  (`data_origin = 'demo'`), con marcas ficticias, precios y stock de prueba,
-  descripciones genéricas sin indicaciones veterinarias e ilustraciones propias.
-  No se atribuye a ninguna de las dos fuentes.
-- Que una página sea pública o que robots.txt la permita **no otorga derechos
-  de reutilización comercial**. Para habilitar una fuente hace falta
-  autorización escrita y agregar su clave a `IMPORT_ALLOWED_SOURCES`.
-- Aun con autorización, el importador no copia descripciones
-  (`IMPORT_COPY_DESCRIPTIONS=false`) ni usa imágenes remotas
-  (`IMPORT_USE_REMOTE_IMAGES=false`) por defecto, no usa el stock externo y deja
-  cada producto inactivo con precio 0 hasta su revisión.
+- El catálogo es **100 % de demostración** (`data_origin = 'demo'`), con marcas
+  ficticias y precios y stock de prueba. No se atribuye a ninguna de las dos fuentes.
+- **El importador se retiró del proyecto (6 de noviembre de 2026).** Ninguna
+  fuente autorizó la reutilización de sus datos, así que no aportaba nada a la
+  tienda. Las columnas `source_*` e `imported_at` siguen en `products` para no
+  cambiar el esquema; quedan vacías.
 
 ### Fotos (actualización del 4 de noviembre de 2026)
 

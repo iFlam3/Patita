@@ -7,7 +7,7 @@
 $query = array_filter(['q' => $q, 'estado' => $status], static fn (string $v): bool => $v !== '');
 $returnTo = '/admin/productos' . ($query !== [] || $result['page'] > 1 ? '?' . http_build_query($query + ($result['page'] > 1 ? ['pagina' => $result['page']] : [])) : '');
 $storeCurrency = (string) config('app.currency');
-$statusOptions = ['' => 'Todos', 'activos' => 'Publicados', 'inactivos' => 'Inactivos', 'sin-stock' => 'Sin stock', 'importados' => 'Importados'];
+$statusOptions = ['' => 'Todos', 'activos' => 'Publicados', 'inactivos' => 'Inactivos', 'sin-stock' => 'Sin stock'];
 ?>
 <div class="container page">
     <header class="page-head page-head-actions">

@@ -72,15 +72,4 @@ return [
         'reset_max_requests'        => max(1, Env::int('PASSWORD_RESET_MAX_REQUESTS', 3)),
         'password_min_length'       => 8,
     ],
-
-    'import' => [
-        'allowed_sources'    => Env::list('IMPORT_ALLOWED_SOURCES', ''),
-        'user_agent'         => (string) Env::get('IMPORT_USER_AGENT', 'PatitaCatalogBot/1.0 (+https://example.test/bot)'),
-        'delay_seconds'      => max(1, Env::int('IMPORT_DELAY_SECONDS', 3)),
-        'timeout_seconds'    => max(5, Env::int('IMPORT_TIMEOUT_SECONDS', 15)),
-        'max_retries'        => min(5, max(0, Env::int('IMPORT_MAX_RETRIES', 2))),
-        'cache_ttl_hours'    => max(0, Env::int('IMPORT_CACHE_TTL_HOURS', 24)),
-        'copy_descriptions'  => Env::bool('IMPORT_COPY_DESCRIPTIONS', false),
-        'use_remote_images'  => Env::bool('IMPORT_USE_REMOTE_IMAGES', false),
-    ],
 ];

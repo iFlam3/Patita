@@ -22,7 +22,7 @@ spl_autoload_register(static function (string $class): void {
     if (!str_starts_with($class, 'App\\')) {
         return;
     }
-    // App\Services\Import\HttpClient -> app/services/import/HttpClient.php
+    // App\Services\Cart -> app/services/Cart.php
     $parts = explode('\\', substr($class, 4));
     $file = array_pop($parts);
     $dir = implode('/', array_map('strtolower', $parts));

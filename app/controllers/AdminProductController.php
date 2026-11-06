@@ -25,7 +25,7 @@ final class AdminProductController extends Controller
     {
         $q = mb_substr($request->query('q'), 0, 100, 'UTF-8');
         $status = $request->query('estado');
-        if (!in_array($status, ['', 'activos', 'inactivos', 'sin-stock', 'importados'], true)) {
+        if (!in_array($status, ['', 'activos', 'inactivos', 'sin-stock'], true)) {
             $status = '';
         }
 

@@ -71,7 +71,6 @@ return static function (Router $r): void {
 
     // Administración (rol admin)
     $r->get('/admin', [AdminController::class, 'dashboard'], ['admin']);
-    $r->get('/admin/importador', [AdminController::class, 'import'], ['admin']);
     $r->post('/admin/correo-prueba', [AdminController::class, 'testMail'], ['admin']);
     $r->get('/admin/productos', [AdminProductController::class, 'index'], ['admin']);
     $r->get('/admin/productos/nuevo', [AdminProductController::class, 'create'], ['admin']);

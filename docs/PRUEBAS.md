@@ -6,9 +6,9 @@ Windows 11) y el servidor embebido de PHP.
 - **Verificado**: se ejecutó y el resultado fue el esperado.
 - **Pendiente**: implementado, sin ejecutar en este entorno.
 
-Pruebas automáticas sin base de datos: `php tests/run.php` (81 pruebas:
-robots.txt, JSON-LD, importes, validación, CSV, detección de bloqueos, huella
-del carrito, calculadoras y países). Resultado: 81 correctas.
+Pruebas automáticas sin base de datos: `php tests/run.php` (44 pruebas:
+importes, validación, huella del carrito, calculadoras, países, regresión
+lineal y chat). Resultado: 44 correctas.
 
 ## Instalación
 
@@ -95,7 +95,7 @@ del carrito, calculadoras y países). Resultado: 81 correctas.
 
 | Prueba | Esperado | Estado |
 |--------|----------|--------|
-| Panel, productos, pedidos, importador | Cargan para el rol admin | Verificado |
+| Panel con métricas, productos, pedidos | Cargan para el rol admin | Verificado |
 | Crear producto con precio 0 publicado | Rechazado | Verificado |
 | Crear producto válido | Visible en la tienda; SKU en mayúsculas; slug generado | Verificado |
 | Validación del formulario | Errores por campo | Verificado (9 errores) |
@@ -104,22 +104,6 @@ del carrito, calculadoras y países). Resultado: 81 correctas.
 | Cambiar estado de pedido | Se guarda | Verificado |
 | Cancelar pedido | Devuelve unidades al stock | Verificado (0 → 3) |
 | Reabrir un pedido cancelado | No permitido | Verificado |
-
-## Importador
-
-| Prueba | Esperado | Estado |
-|--------|----------|--------|
-| CSV de ejemplo con `--dry-run` | Valida sin escribir | Verificado |
-| JSON de ejemplo | Crea 2 productos; la segunda vez los actualiza (sin duplicar) | Verificado |
-| Filas inválidas | Se descartan con el detalle del error | Verificado |
-| Producto en otra moneda | Se importa inactivo con aviso | Verificado |
-| `--list-sources` | Verificación y condiciones de cada fuente | Verificado |
-| Fuente no habilitada | Se niega con código 3 y explica por qué | Verificado |
-| `--check-robots` contra robots.txt real | Permite `/products/x`, bloquea `?oseid=` | Verificado |
-| Adaptador petstore.direct sobre una ficha real | Extrae nombre, marca, descripción, SKU, imagen, precio y moneda | Verificado (1 ficha, sin guardar contenido) |
-| Detección de CAPTCHA o bloqueo | Detiene la ejecución | Verificado (unitaria); no se provocó un bloqueo real |
-| Importación web completa | Productos inactivos con `data_origin = scraped` | Pendiente (requiere autorización escrita de la fuente) |
-| Adaptador PetSmart | — | No verificado (los términos de uso lo impiden) |
 
 ## Accesibilidad y diseño
 

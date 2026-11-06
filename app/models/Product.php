@@ -29,7 +29,7 @@ final class Product
         'nombre_desc' => 'Nombre: Z a A',
     ];
 
-    /** Columnas editables desde el panel o el importador. */
+    /** Columnas editables desde el panel. */
     private const FIELDS = [
         'sku', 'name', 'slug', 'brand', 'pet_type', 'category', 'description', 'price', 'currency', 'stock',
         'image_url', 'source_url', 'source_site', 'source_price', 'source_currency', 'data_origin',
@@ -342,8 +342,6 @@ final class Product
             $where[] = 'active = 0';
         } elseif ($status === 'sin-stock') {
             $where[] = 'stock = 0';
-        } elseif ($status === 'importados') {
-            $where[] = "data_origin = 'scraped'";
         }
         $sqlWhere = implode(' AND ', $where);
         $pdo = Database::pdo();

@@ -4,7 +4,6 @@ $links = [
     'panel'      => ['/admin', 'Resumen', 'store'],
     'productos'  => ['/admin/productos', 'Productos', 'package'],
     'pedidos'    => ['/admin/pedidos', 'Pedidos', 'truck'],
-    'importador' => ['/admin/importador', 'Importador', 'leaf'],
 ];
 ?>
 <nav class="admin-nav" aria-label="Administración">

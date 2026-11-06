@@ -139,6 +139,88 @@ final class Order
         return $counts;
     }
 
+    // ------------------------------------------------------------ métricas (sin pedidos cancelados)
+
+    /**
+     * Ingresos y pedidos agrupados por día, semana (lunes) o mes, en UTC.
+     *
+     * @param 'day'|'week'|'month' $unit
+     * @return array<string, array{revenue: float, orders: int}> Clave: inicio del periodo (Y-m-d).
+     */
+    public static function revenueSeries(string $unit, string $from, string $to): array
+    {
+        $period = match ($unit) {
+            'day'   => 'DATE(created_at)',
+            'week'  => 'DATE(created_at) - INTERVAL WEEKDAY(created_at) DAY',
+            'month' => "DATE_FORMAT(created_at, '%Y-%m-01')",
+        };
+        $stmt = Database::pdo()->prepare(
+            "SELECT $period AS period, SUM(total) AS revenue, COUNT(*) AS orders
+             FROM orders WHERE status <> 'cancelled' AND created_at >= ? AND created_at < ?
+             GROUP BY period"
+        );
+        $stmt->execute([$from, $to]);
+        $series = [];
+        foreach ($stmt->fetchAll() as $row) {
+            $series[(string) $row['period']] = ['revenue' => (float) $row['revenue'], 'orders' => (int) $row['orders']];
+        }
+
+        return $series;
+    }
+
+    /**
+     * @return array{revenue: float, orders: int}
+     */
+    public static function salesTotals(string $from, string $to): array
+    {
+        $stmt = Database::pdo()->prepare(
+            "SELECT COALESCE(SUM(total), 0) AS revenue, COUNT(*) AS orders
+             FROM orders WHERE status <> 'cancelled' AND created_at >= ? AND created_at < ?"
+        );
+        $stmt->execute([$from, $to]);
+        $row = $stmt->fetch() ?: [];
+
+        return ['revenue' => (float) ($row['revenue'] ?? 0), 'orders' => (int) ($row['orders'] ?? 0)];
+    }
+
+    /**
+     * @return list<array{label: string, revenue: float, units: int}>
+     */
+    public static function topProducts(string $from, string $to, int $limit = 5): array
+    {
+        $stmt = Database::pdo()->prepare(
+            "SELECT oi.product_name AS label, SUM(oi.subtotal) AS revenue, SUM(oi.quantity) AS units
+             FROM order_items oi JOIN orders o ON o.id = oi.order_id
+             WHERE o.status <> 'cancelled' AND o.created_at >= ? AND o.created_at < ?
+             GROUP BY oi.sku, oi.product_name ORDER BY revenue DESC LIMIT " . max(1, $limit)
+        );
+        $stmt->execute([$from, $to]);
+
+        return array_map(static fn (array $r): array => ['label' => (string) $r['label'], 'revenue' => (float) $r['revenue'], 'units' => (int) $r['units']], $stmt->fetchAll());
+    }
+
+    /**
+     * Ingresos por tipo de mascota (productos borrados cuentan como "otros").
+     *
+     * @return array<string, float>
+     */
+    public static function revenueByPet(string $from, string $to): array
+    {
+        $stmt = Database::pdo()->prepare(
+            "SELECT COALESCE(p.pet_type, 'other') AS pet, SUM(oi.subtotal) AS revenue
+             FROM order_items oi JOIN orders o ON o.id = oi.order_id LEFT JOIN products p ON p.id = oi.product_id
+             WHERE o.status <> 'cancelled' AND o.created_at >= ? AND o.created_at < ?
+             GROUP BY pet ORDER BY revenue DESC"
+        );
+        $stmt->execute([$from, $to]);
+        $out = [];
+        foreach ($stmt->fetchAll() as $row) {
+            $out[(string) $row['pet']] = (float) $row['revenue'];
+        }
+
+        return $out;
+    }
+
     /**
      * Estados a los que puede pasar un pedido. Entregado y cancelado son finales.
      *
