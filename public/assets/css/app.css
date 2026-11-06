@@ -2123,3 +2123,10 @@ input[type="file"] { padding: 10px; border: 1.5px dashed var(--line-strong); bor
 .seg-shipped { stroke: var(--primary-ink); background: var(--primary-ink); }
 .seg-delivered { stroke: var(--night); background: var(--night); }
 .seg-cancelled { stroke: var(--red-ink); background: var(--red-ink); }
+
+/* ---------------------------------------------------------------- código de recuperación */
+
+.code-input { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.4em; text-align: center; font-variant-numeric: tabular-nums; }
+.auth-resend { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 20px; font-size: 0.9375rem; color: var(--carbon-soft); }
+.btn-link { padding: 0; border: 0; background: none; color: var(--primary-ink); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.btn-link:hover { color: var(--primary-deep); }

@@ -68,7 +68,7 @@ return [
         'login_max_attempts'        => max(1, Env::int('LOGIN_MAX_ATTEMPTS', 5)),
         'login_max_attempts_per_ip' => max(1, Env::int('LOGIN_MAX_ATTEMPTS_PER_IP', 20)),
         'login_decay_minutes'       => max(1, Env::int('LOGIN_DECAY_MINUTES', 15)),
-        'reset_ttl_minutes'         => max(5, Env::int('PASSWORD_RESET_TTL_MINUTES', 60)),
+        'reset_ttl_minutes'         => max(5, Env::int('PASSWORD_RESET_TTL_MINUTES', 15)),
         'reset_max_requests'        => max(1, Env::int('PASSWORD_RESET_MAX_REQUESTS', 3)),
         'password_min_length'       => 8,
     ],

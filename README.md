@@ -182,7 +182,7 @@ reescritura de URL con Apache en subdirectorio está pendiente de probar.
 
 - **Desarrollo** (`MAIL_TRANSPORT=log`): cada correo se guarda como archivo
   `.eml` en `storage/mail`. Ábrelo con cualquier editor o cliente de correo para
-  ver, por ejemplo, el enlace de recuperación de contraseña. Ese enlace nunca se
+  ver, por ejemplo, el código de recuperación de contraseña. Ese código nunca se
   muestra en la web.
 - **Producción** (`MAIL_TRANSPORT=smtp`): cliente SMTP propio
   (`app/services/SmtpClient.php`, STARTTLS o SSL, verificación de certificado),
@@ -295,9 +295,13 @@ importación (nunca se mezclan monedas en un pedido).
   locales. **Limitaciones:** solo sirve con un único servidor, depende de la IP
   de `REMOTE_ADDR` y falla de forma abierta si `storage/ratelimit` no es
   escribible. Detalles en [docs/PRODUCCION.md](docs/PRODUCCION.md).
-- Recuperación de contraseña: token de 256 bits, solo su hash SHA-256 en la
-  base de datos, 60 minutos de vigencia, un solo uso, mensaje idéntico exista
-  o no el correo, token fuera de la URL tras abrir el enlace.
+- Recuperación de contraseña con **código de 6 dígitos** por correo
+  (`/recuperar` y luego `/restablecer`): el código se guarda con bcrypt (nunca en
+  claro ni en los registros), vence en `PASSWORD_RESET_TTL_MINUTES` (15 por
+  defecto), sirve una sola vez y solo vale el último pedido. Cada código admite 5
+  intentos y luego se invalida; además hay un tope de 30 verificaciones por IP.
+  La respuesta es idéntica exista o no el correo (incluido el tiempo de
+  respuesta). Al cambiar la contraseña se cierran las demás sesiones.
 
 ## Estructura
 

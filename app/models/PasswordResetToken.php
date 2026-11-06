@@ -7,20 +7,27 @@ namespace App\Models;
 use App\Core\Database;
 
 /**
- * Tokens de recuperación. Solo se guarda hash('sha256', token).
+ * Códigos de recuperación de 6 dígitos. En token_hash se guarda
+ * password_hash(código) (bcrypt, 60 caracteres): con solo 10^6 combinaciones,
+ * un SHA-256 sin sal se revertiría al instante si se filtrara la base.
  */
 final class PasswordResetToken
 {
-    public static function create(int $userId, string $tokenHash, int $ttlMinutes): void
+    public static function newCode(): string
+    {
+        return str_pad((string) random_int(0, 999_999), 6, '0', STR_PAD_LEFT);
+    }
+
+    public static function create(int $userId, string $code, int $ttlMinutes): void
     {
         $stmt = Database::pdo()->prepare(
             'INSERT INTO password_reset_tokens (user_id, token_hash, expires_at, created_at) VALUES (?, ?, ?, ?)'
         );
-        $stmt->execute([$userId, $tokenHash, Database::now($ttlMinutes * 60), Database::now()]);
+        $stmt->execute([$userId, password_hash($code, PASSWORD_BCRYPT), Database::now($ttlMinutes * 60), Database::now()]);
     }
 
     /**
-     * Invalida los tokens pendientes del usuario (solo el último enlace sirve).
+     * Invalida los códigos pendientes del usuario (solo el último sirve).
      */
     public static function invalidateForUser(int $userId): void
     {
@@ -31,21 +38,24 @@ final class PasswordResetToken
     }
 
     /**
+     * Último código vigente del usuario.
+     *
      * @return array<string, mixed>|null
      */
-    public static function findValid(string $tokenHash): ?array
+    public static function latestValidForUser(int $userId): ?array
     {
         $stmt = Database::pdo()->prepare(
-            'SELECT * FROM password_reset_tokens WHERE token_hash = ? AND used_at IS NULL AND expires_at > ?'
+            'SELECT * FROM password_reset_tokens WHERE user_id = ? AND used_at IS NULL AND expires_at > ?
+             ORDER BY id DESC LIMIT 1'
         );
-        $stmt->execute([$tokenHash, Database::now()]);
+        $stmt->execute([$userId, Database::now()]);
         $row = $stmt->fetch();
 
         return is_array($row) ? $row : null;
     }
 
     /**
-     * Marca el token como usado. Devuelve false si otra petición lo usó antes
+     * Marca el código como usado. Devuelve false si otra petición lo usó antes
      * (garantiza un solo uso aun con solicitudes simultáneas).
      */
     public static function markUsed(int $id): bool

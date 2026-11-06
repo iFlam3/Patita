@@ -6,9 +6,9 @@ Windows 11) y el servidor embebido de PHP.
 - **Verificado**: se ejecutó y el resultado fue el esperado.
 - **Pendiente**: implementado, sin ejecutar en este entorno.
 
-Pruebas automáticas sin base de datos: `php tests/run.php` (44 pruebas:
+Pruebas automáticas sin base de datos: `php tests/run.php` (47 pruebas:
 importes, validación, huella del carrito, calculadoras, países, regresión
-lineal y chat). Resultado: 44 correctas.
+lineal, chat y código de recuperación). Resultado: 47 correctas.
 
 ## Instalación
 
@@ -83,8 +83,11 @@ lineal y chat). Resultado: 44 correctas.
 | POST sin token CSRF o con token falso | 419 "La página expiró" | Verificado |
 | Cliente entra a `/admin` | 403 | Verificado |
 | Recuperación con correo inexistente | Mismo mensaje y ningún correo enviado | Verificado |
-| Token de recuperación | Solo el hash SHA-256 en la base de datos | Verificado |
-| Enlace de recuperación | Pasa el token a la sesión, limpia la URL, `Referrer-Policy: no-referrer` | Verificado |
+| Código de recuperación | Correo con 6 dígitos; en la base solo el hash bcrypt (60 caracteres), vence en 15 min | Verificado |
+| Código con formato inválido (`12a`) | "El código tiene 6 dígitos", no gasta intentos | Verificado |
+| Código incorrecto | Mensaje genérico; al 5.º intento el código se invalida y ni el correcto sirve | Verificado |
+| Código correcto + contraseña nueva | Contraseña actualizada, la vieja ya no entra, la nueva sí | Verificado |
+| Reusar el código tras el cambio | Sin efecto: vuelve a `/recuperar` | Verificado |
 | Reusar el enlace | "El enlace no es válido, ya se usó o venció" | Verificado |
 | Enlace vencido (60 min) | Rechazado | Pendiente (requiere esperar o editar `expires_at`) |
 | Cambio de contraseña | La sesión actual sigue; las demás se cierran | Verificado |

@@ -10,6 +10,7 @@ declare(strict_types=1);
 require dirname(__DIR__) . '/app/bootstrap.php';
 
 use App\Core\Validator;
+use App\Models\PasswordResetToken;
 use App\Services\Cart;
 use App\Services\PetTools;
 use App\Services\SalesForecast;
@@ -105,6 +106,12 @@ $noisy = SalesForecast::fit([2.0, 4.0, 3.0, 6.0, 5.0]);
 $check('regresión: pendiente y R² con ruido', abs($noisy['b'] - 0.8) < 1e-9 && abs((float) $noisy['r2'] - 0.64) < 1e-9);
 $check('regresión: proyección no baja de cero', SalesForecast::project(SalesForecast::fit([9.0, 5.0, 1.0]), 3, 2) === [0.0, 0.0]);
 $check('regresión: serie constante sin R²', SalesForecast::fit([4.0, 4.0, 4.0])['r2'] === null);
+
+$codes = array_map(static fn (): string => PasswordResetToken::newCode(), range(1, 200));
+$check('recuperación: código de 6 dígitos con ceros a la izquierda', count(array_filter($codes, static fn (string $c): bool => preg_match('/^\d{6}$/', $c) === 1)) === 200);
+$check('recuperación: códigos aleatorios', count(array_unique($codes)) > 190);
+$hash = password_hash('012345', PASSWORD_BCRYPT);
+$check('recuperación: el hash cabe en token_hash (CHAR 64)', strlen($hash) <= 64 && password_verify('012345', $hash) && !password_verify('012346', $hash));
 
 // ------------------------------------------------------------ resultado
 

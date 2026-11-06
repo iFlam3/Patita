@@ -58,7 +58,7 @@ return static function (Router $r): void {
     $r->post('/registro', [AuthController::class, 'register'], ['guest']);
     $r->post('/salir', [AuthController::class, 'logout'], ['auth']);
     $r->get('/recuperar', [PasswordResetController::class, 'showRequest']);
-    $r->post('/recuperar', [PasswordResetController::class, 'sendLink']);
+    $r->post('/recuperar', [PasswordResetController::class, 'sendCode']);
     $r->get('/restablecer', [PasswordResetController::class, 'showReset']);
     $r->post('/restablecer', [PasswordResetController::class, 'reset']);
 
