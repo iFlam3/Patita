@@ -94,7 +94,7 @@ for ($daysAgo = 180; $daysAgo >= 1; $daysAgo--) {
         $sql .= sprintf(
             "INSERT INTO orders (user_id, status, subtotal, shipping_cost, total, currency, customer_name, customer_email, customer_phone, shipping_address, payment_method, checkout_token, created_at, updated_at) VALUES (@demo_user, '%s', %s, %s, %s, '%s', %s, '%s', '0412-0000000', %s, '%s', '%s', %s, %s);\nSET @o = LAST_INSERT_ID();\n",
             $status, cents_to_decimal($subtotal), cents_to_decimal($shipping), cents_to_decimal($subtotal + $shipping), $currency,
-            $q($name), DEMO_EMAIL, $q((string) $address), mt_rand(0, 1) ? 'bank_transfer' : 'cash_on_delivery',
+            $q($name), DEMO_EMAIL, $q((string) $address), mt_rand(0, 1) ? 'pago_movil' : 'cash_on_delivery',
             'demo' . substr(hash('sha256', $daysAgo . '-' . $n), 0, 60), $when, $when
         );
         foreach ($lines as [$p, $qty, $unit]) {

@@ -13,7 +13,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
             <h1 class="hero-title">Todo para tu mascota, sea cual sea.</h1>
             <p class="hero-lead">
                 Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos y animales pequeños.
-                Pagas por transferencia o al recibir.
+                Pagas por Pago Móvil o al recibir.
             </p>
             <div class="hero-actions">
                 <a class="btn btn-accent btn-lg" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
@@ -157,7 +157,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
             <li>
                 <?= icon('banknote', 'icon icon-lg') ?>
                 <h3>Sin tarjeta</h3>
-                <p>Pagas por transferencia bancaria o al recibir tu pedido.</p>
+                <p>Pagas por Pago Móvil o al recibir tu pedido.</p>
             </li>
             <li>
                 <?= icon('paw-print', 'icon icon-lg') ?>

@@ -20,7 +20,7 @@ $email = (string) config('app.contact_email');
         <p>Recibirás un número de pedido al confirmar. Podemos cancelar un pedido por falta de existencias, error evidente de precio o sospecha de fraude; en ese caso te avisaremos y, si ya pagaste, te devolveremos el importe.</p>
 
         <h2>5. Pagos</h2>
-        <p>Aceptamos transferencia bancaria y pago contra entrega. No solicitamos ni almacenamos datos de tarjetas. En pagos por transferencia, el pedido se prepara cuando confirmamos el pago.</p>
+        <p>Aceptamos Pago Móvil y pago contra entrega. Solo hacemos envíos dentro de Venezuela. No solicitamos ni almacenamos datos de tarjetas. En pagos por Pago Móvil, el pedido se prepara cuando confirmamos el pago.</p>
 
         <h2>6. Envíos</h2>
         <p>El costo de envío se muestra antes de confirmar. Los plazos dependen del destino y de la empresa de mensajería. Revisa que la dirección sea correcta: un error en ella puede generar costos adicionales.</p>

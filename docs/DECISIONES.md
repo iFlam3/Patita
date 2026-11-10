@@ -44,7 +44,7 @@ como marca o dominio.
 | País y moneda | Venezuela, dólar estadounidense (USD), formato `es-US` (muestra `$1,234.50`; `es-VE` mostraría "USD 1.234,50"), zona `America/Caracas`. | Configurables en `.env` (`APP_COUNTRY`, `APP_CURRENCY`, `APP_LOCALE`, `APP_TIMEZONE`). No se asume una moneda común para la región. |
 | Monedas | Solo se venden productos en la moneda de la tienda. Un producto en otra moneda queda oculto e inactivo. | Así un pedido nunca mezcla monedas. |
 | Precio de origen | `source_price`/`source_currency` se guardan aparte y nunca se convierten. | El precio local lo define un administrador. |
-| Pagos | Transferencia bancaria y pago contra entrega, configurables con `PAYMENT_METHODS`. | Modalidad demostrativa: no hay cobros ni datos de tarjeta. |
+| Pagos | Pago Móvil (datos editables en /admin/pago-movil) y pago contra entrega, configurables con `PAYMENT_METHODS`. | Modalidad demostrativa: no hay cobros ni datos de tarjeta. |
 | Envío | Tarifa fija y umbral de envío gratis (`SHIPPING_FLAT_RATE`, `SHIPPING_FREE_FROM`), visibles en carrito, resumen y página "Envíos y pagos". | No se inventan zonas ni plazos de entrega. |
 | Impuestos | No se calculan. | No existe una regla fiscal común para Latinoamérica; se documenta como pendiente. |
 | Checkout | Tres pasos: datos → resumen → confirmación. | El brief pide mostrar un resumen antes de confirmar. |
@@ -174,7 +174,7 @@ preferencias de movimiento reducido.
   servidor.
 - Teléfono flexible (7 a 15 dígitos, admite `+`, espacios, guiones y paréntesis).
 - Dirección flexible: complemento, región y código postal son opcionales.
-- Países de envío configurables (`SHIPPING_COUNTRIES`).
+- Envíos solo a Venezuela (fijo en `app/config/app.php`).
 - Pendiente antes de un lanzamiento real: impuestos, facturación electrónica,
   normas de protección al consumidor y de datos personales de cada país,
   medios de pago locales y logística. Ver `PRODUCCION.md`.

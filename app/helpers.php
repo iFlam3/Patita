@@ -407,7 +407,8 @@ function enabled_payment_methods(): array
     $defined = (array) config('catalog.payment_methods', []);
     $enabled = [];
     foreach ((array) config('app.shop.payment_methods', []) as $code) {
-        if (isset($defined[$code])) {
+        $code = $code === 'bank_transfer' ? 'pago_movil' : $code;
+        if (isset($defined[$code]) && $code !== 'bank_transfer') {
             $enabled[$code] = $defined[$code];
         }
     }

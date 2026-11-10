@@ -73,6 +73,7 @@ $currency = (string) $summary['currency'];
                 'total'    => $summary['total_cents'],
                 'currency' => $currency,
             ]) ?>
+            <?= App\Core\View::partial('partials/bs-rate', ['total' => $summary['total_cents']]) ?>
             <form action="<?= e(url('/checkout/confirmar')) ?>" method="post" data-once>
                 <?= csrf_field() ?>
                 <input type="hidden" name="checkout_token" value="<?= e($checkoutToken) ?>">

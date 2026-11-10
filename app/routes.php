@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Controllers\AccountController;
 use App\Controllers\AdminController;
 use App\Controllers\AdminOrderController;
+use App\Controllers\AdminPaymentController;
 use App\Controllers\AdminProductController;
 use App\Controllers\AuthController;
 use App\Controllers\CartController;
@@ -82,4 +83,6 @@ return static function (Router $r): void {
     $r->get('/admin/pedidos', [AdminOrderController::class, 'index'], ['admin']);
     $r->get('/admin/pedidos/{id:\d+}', [AdminOrderController::class, 'show'], ['admin']);
     $r->post('/admin/pedidos/{id:\d+}/estado', [AdminOrderController::class, 'updateStatus'], ['admin']);
+    $r->get('/admin/pago-movil', [AdminPaymentController::class, 'edit'], ['admin']);
+    $r->post('/admin/pago-movil', [AdminPaymentController::class, 'update'], ['admin']);
 };

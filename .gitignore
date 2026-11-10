@@ -3,6 +3,7 @@
 /storage/logs/*
 /storage/mail/*
 /storage/ratelimit/*
+/storage/settings/*
 !/storage/**/.gitkeep
 !/storage/.htaccess
 .DS_Store

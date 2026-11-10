@@ -122,8 +122,8 @@ agregar una tabla. Límites por defecto: 5 intentos fallidos por correo + IP y
 7. Revisión legal por país: aviso de privacidad y tratamiento de datos
    personales, términos y condiciones, políticas de devolución y garantías,
    protección al consumidor, facturación e impuestos.
-8. Medios de pago reales y su conciliación; datos bancarios verdaderos en
-   `BANK_TRANSFER_DETAILS`.
+8. Medios de pago reales y su conciliación; datos reales de Pago Móvil en
+   `/admin/pago-movil`.
 9. Catálogo real: marcas, precios, stock, fotos y descripciones con permiso.
 10. Prueba de accesibilidad con lector de pantalla y prueba en dispositivos.
 11. Monitoreo de errores (los errores se registran en `storage/logs/app.log`).

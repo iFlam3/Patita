@@ -6,7 +6,7 @@
  */
 $number = order_number((int) $order['id']);
 $currency = (string) $order['currency'];
-$isTransfer = $order['payment_method'] === 'bank_transfer';
+$isTransfer = $order['payment_method'] === 'pago_movil';
 ?>
 <div class="container page page-narrow">
     <?= App\Core\View::partial('partials/checkout-steps', ['current' => 4]) ?>
@@ -21,13 +21,12 @@ $isTransfer = $order['payment_method'] === 'bank_transfer';
     <section class="payment-box" aria-labelledby="instrucciones-pago">
         <h2 id="instrucciones-pago"><?= icon($isTransfer ? 'banknote' : 'hand-coins', 'icon icon-sm') ?> <?= e(payment_method_label((string) $order['payment_method'])) ?></h2>
         <?php if ($isTransfer): ?>
-            <p>Transfiere <?= price_tag(to_cents((string) $order['total']), $currency) ?> y usa <strong><?= e($number) ?></strong> como referencia.</p>
-            <?php if ((string) config('app.shop.bank_details') !== ''): ?>
-                <p class="payment-details"><?= e(config('app.shop.bank_details')) ?></p>
-            <?php endif; ?>
+            <p>Haz un Pago Móvil por <?= price_tag(to_cents((string) $order['total']), $currency) ?> (o su equivalente en Bs) y usa <strong><?= e($number) ?></strong> como concepto.</p>
+            <?= App\Core\View::partial('partials/pago-movil') ?>
         <?php else: ?>
             <p>Pagarás <?= price_tag(to_cents((string) $order['total']), $currency) ?> al recibir tu pedido.</p>
         <?php endif; ?>
+        <?= App\Core\View::partial('partials/bs-rate', ['total' => to_cents((string) $order['total'])]) ?>
         <p class="field-hint">Modalidad demostrativa: no se procesa ningún cobro.</p>
     </section>
 

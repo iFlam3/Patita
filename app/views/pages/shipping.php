@@ -22,7 +22,7 @@
             <?php if ($freeFrom > 0): ?>
                 <li>Envío gratis en pedidos desde <?= price_tag($freeFrom) ?>.</li>
             <?php endif; ?>
-            <li>Destinos disponibles: <?= count($countries) > 20 ? count($countries) . ' países; eliges el tuyo al completar el pedido' : e(implode(', ', $countries)) ?>.</li>
+            <li>Solo hacemos envíos dentro de Venezuela.</li>
             <li>Verás el costo exacto antes de confirmar el pedido.</li>
         </ul>
         <p class="field-hint">Los plazos de entrega no están definidos en esta demo. Antes de un lanzamiento real se deben acordar con una empresa de mensajería.</p>

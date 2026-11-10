@@ -87,7 +87,7 @@ $files = $copy(BASE_PATH . '/public', $htdocs, static fn (string $r): bool =>
 $files += $copy(BASE_PATH . '/app', $appDir . '/app');
 
 // 3. storage vacío con sus protecciones.
-foreach (['logs', 'mail', 'ratelimit'] as $sub) {
+foreach (['logs', 'mail', 'ratelimit', 'settings'] as $sub) {
     mkdir($appDir . '/storage/' . $sub, 0775, true);
     file_put_contents($appDir . '/storage/' . $sub . '/.gitkeep', '');
 }

@@ -182,9 +182,9 @@ final class CheckoutService
                 );
             }
 
-            $payment = (string) $order['payment_method'] === 'bank_transfer'
-                ? "Pago por transferencia bancaria (modalidad demostrativa).\n" . (string) config('app.shop.bank_details')
-                . "\nUsa " . order_number($orderId) . ' como referencia.'
+            $payment = (string) $order['payment_method'] === 'pago_movil'
+                ? "Pago Móvil (modalidad demostrativa).\n" . PagoMovil::text()
+                . "\nUsa " . order_number($orderId) . ' como concepto.'
                 : 'Pago contra entrega (modalidad demostrativa): pagas al recibir tu pedido.';
 
             $body = sprintf(

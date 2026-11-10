@@ -164,9 +164,14 @@ return [
 
     // Modalidades demostrativas: no se procesa ningún cobro ni se guardan tarjetas.
     'payment_methods' => [
+        'pago_movil' => [
+            'label'       => 'Pago Móvil',
+            'description' => 'Al confirmar verás banco, cédula y teléfono. Usa tu número de pedido como concepto.',
+        ],
+        // Solo para mostrar pedidos antiguos; ya no se ofrece.
         'bank_transfer' => [
             'label'       => 'Transferencia bancaria',
-            'description' => 'Al confirmar verás los datos para transferir. Usa tu número de pedido como referencia.',
+            'description' => 'Método retirado.',
         ],
         'cash_on_delivery' => [
             'label'       => 'Pago contra entrega',

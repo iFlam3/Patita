@@ -46,9 +46,10 @@ $currency = (string) $order['currency'];
             ]) ?>
             <h3>Pago</h3>
             <p><?= e(payment_method_label((string) $order['payment_method'])) ?></p>
-            <?php if ($order['payment_method'] === 'bank_transfer' && $order['status'] === 'received' && (string) config('app.shop.bank_details') !== ''): ?>
-                <p class="payment-details"><?= e(config('app.shop.bank_details')) ?></p>
-                <p class="field-hint">Referencia: <?= e(order_number((int) $order['id'])) ?></p>
+            <?php if ($order['payment_method'] === 'pago_movil' && $order['status'] === 'received'): ?>
+                <?= App\Core\View::partial('partials/pago-movil') ?>
+                <p class="field-hint">Concepto: <?= e(order_number((int) $order['id'])) ?></p>
+                <?= App\Core\View::partial('partials/bs-rate', ['total' => to_cents((string) $order['total'])]) ?>
             <?php endif; ?>
             <h3>Entrega</h3>
             <?= App\Core\View::partial('partials/address', ['address' => $address]) ?>

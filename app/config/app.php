@@ -39,9 +39,9 @@ return [
     'shop' => [
         'shipping_flat_rate'  => (string) Env::get('SHIPPING_FLAT_RATE', '5.99'),
         'shipping_free_from'  => (string) Env::get('SHIPPING_FREE_FROM', '0'),
-        'shipping_countries'  => array_map('strtoupper', Env::list('SHIPPING_COUNTRIES', (string) Env::get('APP_COUNTRY', 'VE'))),
-        'payment_methods'     => Env::list('PAYMENT_METHODS', 'bank_transfer,cash_on_delivery'),
-        'bank_details'        => (string) Env::get('BANK_TRANSFER_DETAILS', ''),
+        // Solo se envía dentro de Venezuela.
+        'shipping_countries'  => ['VE'],
+        'payment_methods'     => Env::list('PAYMENT_METHODS', 'pago_movil,cash_on_delivery'),
         'max_qty_per_item'    => max(1, Env::int('MAX_QTY_PER_ITEM', 20)),
         'per_page'            => 12,
     ],

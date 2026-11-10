@@ -17,7 +17,7 @@
         <ol class="plain-list">
             <li>Escríbenos a <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a> con tu número de pedido y el motivo; si hay daños, agrega fotos.</li>
             <li>Te responderemos con las instrucciones para el cambio o la devolución.</li>
-            <li>Cuando recibamos y revisemos el producto, haremos el cambio o el reembolso por el mismo medio de pago, o por transferencia si pagaste contra entrega.</li>
+            <li>Cuando recibamos y revisemos el producto, haremos el cambio o el reembolso por el mismo medio de pago, o por Pago Móvil si pagaste contra entrega.</li>
         </ol>
 
         <p>Esta política no limita los derechos que te otorgue la ley de protección al consumidor de tu país.</p>
