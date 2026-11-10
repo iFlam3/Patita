@@ -17,6 +17,17 @@
      el texto siempre es --carbon.
    - --primary sobre --neutral ................. 4.25:1  NO apto para texto
      pequeño: en fondos neutros los textos verdes usan --primary-ink.
+
+   Paleta 2026 (rediseño en curso, sección por sección): ámbar #FF9F1C,
+   naranja #FFAA33, lima #31C71A, verde claro #94DF88, té #C5EBBF y
+   nieve #F6F6F6.
+   - --carbon sobre --snow ..................... 15.1:1  AAA
+   - --carbon sobre --amber .................... 7.9:1   AAA
+   - --carbon sobre --tea ...................... 12.4:1  AAA
+   - --lime-ink (#1A6B0F) sobre --snow ......... 6.2:1   AA
+   - --lime-ink sobre --tea .................... 5.1:1   AA
+   - --lime sobre --snow ....................... 2.1:1   NO apto para texto:
+     el lima puro solo se usa en formas, líneas y fondos sin texto.
    ========================================================================== */
 
 :root {
@@ -53,6 +64,23 @@
     --gutter: 16px;
     --shadow-pop: 0 10px 28px rgba(35, 31, 32, 0.16);
     --focus: var(--primary);
+
+    /* Paleta 2026 */
+    --amber: #FF9F1C;
+    --amber-soft: #FFAA33;
+    --lime: #31C71A;
+    --lime-light: #94DF88;
+    --tea: #C5EBBF;
+    --snow: #F6F6F6;
+    --lime-ink: #1A6B0F;
+
+    /* Movimiento */
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+    --dur-1: 0.25s;
+    --dur-2: 0.6s;
+    --dur-3: 0.9s;
+    --stagger: 70ms;
 }
 
 /* ---------------------------------------------------------------- base */
@@ -430,7 +458,9 @@ body > main { flex: 1 0 auto; }
 .btn-lg { min-height: 52px; padding: 12px 24px; font-size: 1.0625rem; }
 .btn-block { width: 100%; }
 .btn[disabled], .btn[aria-busy="true"] { opacity: 0.65; cursor: progress; }
-.hero .btn:focus-visible { outline-color: var(--white); }
+.btn-outline-dark { border-color: var(--carbon); color: var(--carbon); background: transparent; }
+.btn-outline-dark:hover { background: var(--carbon); color: var(--snow); }
+.hero .btn:focus-visible { outline-color: var(--carbon); outline-offset: 3px; }
 
 .btn-icon {
     display: grid;
@@ -716,33 +746,92 @@ select {
 /* ---------------------------------------------------------------- portada */
 
 .hero {
-    background: var(--primary);
-    color: var(--white);
+    position: relative;
+    background: var(--snow);
+    color: var(--carbon);
     overflow: hidden;
+    isolation: isolate;
 }
 .hero-inner {
     display: grid;
-    gap: 36px;
-    padding-block: 44px 40px;
+    gap: 40px;
+    padding-block: 48px 40px;
 }
 .hero-title {
     max-width: 13ch;
-    margin-bottom: 18px;
-    font-size: clamp(2.4rem, 1.3rem + 5vw, 4.75rem);
+    margin-bottom: 22px;
+    font-size: clamp(2.5rem, 1.3rem + 5.2vw, 5rem);
     font-weight: 850;
     font-stretch: var(--widest);
     line-height: 0.95;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
+}
+.hero-mark { position: relative; display: inline-block; white-space: nowrap; color: var(--lime-ink); }
+.hero-mark-line {
+    position: absolute;
+    left: -2%;
+    bottom: -0.12em;
+    width: 104%;
+    height: 0.24em;
+    overflow: visible;
+}
+.hero-mark-line path {
+    fill: none;
+    stroke: var(--lime);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 0;
 }
 .hero-lead {
     max-width: 44ch;
-    margin-bottom: 26px;
+    margin-bottom: 28px;
+    color: var(--carbon-soft);
     font-size: 1.125rem;
     line-height: 1.55;
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-actions .btn {
+    transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out), background-color var(--dur-1), color var(--dur-1);
+}
+.hero-actions .btn:hover { transform: translateY(-2px); }
+.hero-actions .btn-accent:hover { box-shadow: 0 8px 0 -2px var(--amber-soft), 0 12px 24px rgba(255, 159, 28, 0.35); }
+.hero-actions .btn:active { transform: translateY(0); box-shadow: none; }
 
-.hero-ark { align-self: end; width: 100%; max-width: 480px; justify-self: center; }
+/* Ilustración: arca con las siete mascotas */
+.hero-ark {
+    position: relative;
+    align-self: end;
+    width: 100%;
+    max-width: 540px;
+    justify-self: center;
+    margin-block: 40px 24px;
+}
+.hero-ark::before {
+    /* mancha de color detrás del arca */
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 48%;
+    width: 112%;
+    aspect-ratio: 1.65;
+    translate: -50% -50%;
+    background: var(--tea);
+    border-radius: 58% 42% 46% 54% / 52% 60% 40% 48%;
+}
+.hero-ark::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -26%;
+    right: -3%;
+    width: 56px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--amber);
+}
+.hero-ark-boat { transform-origin: 50% 90%; }
 .hero-ark-animals {
     display: flex;
     justify-content: space-between;
@@ -754,27 +843,109 @@ select {
 .hero-ark-animals li {
     display: grid;
     place-items: center;
-    width: clamp(36px, 10vw, 58px);
+    width: clamp(38px, 10vw, 60px);
     aspect-ratio: 1;
+    border: 3px solid var(--lime-light);
     border-radius: 50%;
     background: var(--white);
-    color: var(--primary-ink);
+    color: var(--lime-ink);
+    box-shadow: 0 4px 0 rgba(26, 107, 15, 0.12);
 }
-.hero-ark-animals li:nth-child(even) { transform: translateY(-10px); }
-.hero-ark-animals .icon { width: 58%; height: 58%; }
+.hero-ark-animals li:nth-child(even) { translate: 0 -12px; }
+.hero-ark-animals .icon { width: 56%; height: 56%; }
 .hero-ark-hull { width: 100%; height: auto; overflow: visible; }
-.hero-ark-hull .hull { fill: var(--white); }
-.hero-ark-hull .hull-stripe { stroke: var(--orange); stroke-width: 6; stroke-linecap: round; }
-.hero-ark-hull .waves { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 3; stroke-linecap: round; }
+.hero-ark-hull .hull { fill: var(--lime); }
+.hero-ark-hull .hull-stripe { stroke: var(--amber); stroke-width: 7; stroke-linecap: round; }
+.hero-ark-waves { display: block; width: 112%; margin: -6px -6% 0; height: 28px; overflow: hidden; }
+.hero-ark-waves .waves { fill: none; stroke: var(--lime-light); stroke-width: 3.5; stroke-linecap: round; }
+.hero-ark-waves .waves-back { stroke: var(--white); opacity: 0.9; }
 
 @media (min-width: 900px) {
     .hero-inner {
         grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
         align-items: center;
-        gap: 48px;
-        padding-block: 72px 64px;
+        gap: 56px;
+        padding-block: 88px 80px;
     }
+    .hero-ark::after { width: 80px; }
 }
+
+/* --- animación de entrada del hero (solo con .rv: JS activo y sin movimiento reducido) */
+
+.rv .hero-mark-line path { stroke-dashoffset: 300; }
+.rv .hero-title.is-in .hero-mark-line path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.8s var(--ease-out) 0.75s;
+}
+.rv .hero-ark-boat { opacity: 0; transform: translateY(40px) rotate(-3deg); }
+.rv .hero-ark.is-in .hero-ark-boat {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease-out 0.2s, transform var(--dur-3) var(--ease-spring) 0.2s;
+}
+.rv .hero-ark-animals li { opacity: 0; transform: translateY(-48px) scale(0.6); }
+.rv .hero-ark.is-in .hero-ark-animals li {
+    animation: ark-drop 0.6s var(--ease-spring) both;
+    animation-delay: calc(0.65s + var(--n, 0) * 90ms);
+}
+.hero-ark-animals li:nth-child(2) { --n: 1; }
+.hero-ark-animals li:nth-child(3) { --n: 2; }
+.hero-ark-animals li:nth-child(4) { --n: 3; }
+.hero-ark-animals li:nth-child(5) { --n: 4; }
+.hero-ark-animals li:nth-child(6) { --n: 5; }
+.hero-ark-animals li:nth-child(7) { --n: 6; }
+.hero-ark-animals li:nth-child(8) { --n: 7; }
+.rv .hero-ark.is-in .hero-ark-boat { animation: ark-bob 5s ease-in-out 1.7s infinite; }
+.hero-ark-waves .waves { animation: waves 6s linear infinite; }
+.hero-ark-waves .waves-back { animation-duration: 9s; animation-direction: reverse; }
+
+@keyframes ark-drop {
+    from { opacity: 0; transform: translateY(-48px) scale(0.6); }
+    60%  { opacity: 1; }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes ark-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-5px) rotate(1.2deg); }
+}
+@keyframes waves {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100px); }
+}
+
+/* ---------------------------------------------------------------- aparición al deslizar
+   Uso: data-reveal (sube), data-reveal="fade" o "scale"; retardo con data-delay="N" (múltiplos de --stagger).
+   Texto por palabras: data-split (el JS envuelve cada palabra).
+   Los estados ocultos dependen de .rv (motion-boot.js): sin JS, sin
+   IntersectionObserver o con movimiento reducido, todo queda visible. */
+
+.rv [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--dur-2) ease-out, transform var(--dur-2) var(--ease-out);
+    transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.rv [data-reveal="fade"] { transform: none; }
+.rv [data-reveal="scale"] { transform: scale(0.94); }
+.rv [data-reveal].is-in { opacity: 1; transform: none; }
+
+.rv [data-split]:not(.is-split) { visibility: hidden; animation: reveal-failsafe 0s 2.5s forwards; }
+@keyframes reveal-failsafe { to { visibility: visible; } }
+
+.split-w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+}
+.split-w > span { display: inline-block; }
+.rv .split-w > span {
+    transform: translateY(105%);
+    transition: transform 0.8s var(--ease-out);
+    transition-delay: calc(var(--w, 0) * var(--stagger));
+}
+.rv .is-in .split-w > span { transform: none; }
 
 /* ---------------------------------------------------------------- secciones */
 
@@ -2013,6 +2184,8 @@ input[type="file"] { padding: 10px; border: 1.5px dashed var(--line-strong); bor
         scroll-behavior: auto !important;
     }
     .spinner { animation: none; border-top-color: rgba(255, 255, 255, 0.35); }
+    .hero-ark-waves .waves, .rv .hero-ark.is-in .hero-ark-boat { animation: none; }
+    .hero-actions .btn:hover { transform: none; }
 }
 
 .tox-table td { font-size: 0.875rem; color: var(--carbon-soft); }

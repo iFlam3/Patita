@@ -24,6 +24,7 @@ $metaDescription = $description ?? 'Accesorios, alimento e insumos para perros, 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;display=swap">
     <link rel="stylesheet" href="<?= e(asset('assets/css/app.css')) ?>">
+    <script src="<?= e(asset('assets/js/motion-boot.js')) ?>"></script>
     <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>
 </head>
 <body>

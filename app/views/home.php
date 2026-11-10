@@ -10,26 +10,31 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
 <section class="hero">
     <div class="container hero-inner">
         <div class="hero-copy">
-            <h1 class="hero-title">Todo para tu mascota, sea cual sea.</h1>
-            <p class="hero-lead">
+            <h1 class="hero-title" data-split>Todo para tu mascota, <span class="hero-mark">sea cual sea.<svg class="hero-mark-line" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M4 12C60 4 140 3 296 9"/></svg></span></h1>
+            <p class="hero-lead" data-reveal data-delay="6">
                 Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos y animales pequeños.
                 Pagas por Pago Móvil o al recibir.
             </p>
-            <div class="hero-actions">
+            <div class="hero-actions" data-reveal data-delay="8">
                 <a class="btn btn-accent btn-lg" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
-                <a class="btn btn-outline-light btn-lg" href="#mascotas">Elegir mascota</a>
+                <a class="btn btn-outline-dark btn-lg" href="#mascotas">Elegir mascota</a>
             </div>
         </div>
-        <div class="hero-ark" aria-hidden="true">
-            <ul class="hero-ark-animals">
-                <?php foreach (pets() as $pet): ?>
-                    <li><?= icon((string) $pet['icon']) ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <svg class="hero-ark-hull" viewBox="0 0 400 112" focusable="false">
-                <path class="hull" d="M8 8H392L344 78Q338 86 328 86H72Q62 86 56 78Z"/>
-                <path class="hull-stripe" d="M32 30H368"/>
-                <path class="waves" d="M0 104q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
+        <div class="hero-ark" aria-hidden="true" data-reveal="fade">
+            <div class="hero-ark-boat">
+                <ul class="hero-ark-animals">
+                    <?php foreach (pets() as $pet): ?>
+                        <li><?= icon((string) $pet['icon']) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <svg class="hero-ark-hull" viewBox="0 0 400 112" focusable="false">
+                    <path class="hull" d="M8 8H392L344 78Q338 86 328 86H72Q62 86 56 78Z"/>
+                    <path class="hull-stripe" d="M32 30H368"/>
+                </svg>
+            </div>
+            <svg class="hero-ark-waves" viewBox="0 0 400 24" preserveAspectRatio="none" focusable="false">
+                <path class="waves" d="M-100 12q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
+                <path class="waves waves-back" d="M-100 20q25-8 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
             </svg>
         </div>
     </div>

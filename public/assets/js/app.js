@@ -12,6 +12,76 @@
     var root = document.documentElement;
     root.classList.add('js');
 
+    // ------------------------------------------------------------ aparición al deslizar
+    // Solo actúa si motion-boot.js activó .rv (JS, IntersectionObserver y sin
+    // movimiento reducido). Va primero para que un error en otro bloque no
+    // deje contenido oculto.
+
+    (function () {
+        if (!root.classList.contains('rv')) {
+            return;
+        }
+
+        // Envuelve cada palabra en <span class="split-w"><span>…</span></span>.
+        // El elemento conserva su texto accesible en aria-label.
+        function splitWords(el) {
+            var index = 0;
+            el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+
+            function walk(node) {
+                Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+                    if (child.nodeType === 3) {
+                        var parts = child.textContent.split(/(\s+)/);
+                        var frag = document.createDocumentFragment();
+                        parts.forEach(function (part) {
+                            if (part === '') { return; }
+                            if (/^\s+$/.test(part)) {
+                                frag.appendChild(document.createTextNode(' '));
+                                return;
+                            }
+                            var outer = document.createElement('span');
+                            var inner = document.createElement('span');
+                            outer.className = 'split-w';
+                            outer.setAttribute('aria-hidden', 'true');
+                            inner.textContent = part;
+                            inner.style.setProperty('--w', String(index++));
+                            outer.appendChild(inner);
+                            frag.appendChild(outer);
+                        });
+                        node.replaceChild(frag, child);
+                    } else if (child.nodeType === 1 && child.namespaceURI === 'http://www.w3.org/1999/xhtml') {
+                        walk(child);
+                    }
+                });
+            }
+
+            walk(el);
+            el.classList.add('is-split');
+        }
+
+        document.querySelectorAll('[data-split]').forEach(splitWords);
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('[data-reveal], [data-split]').forEach(function (el) {
+            // La CSP no permite style="" en el HTML; el retardo llega en data-delay.
+            var delay = el.getAttribute('data-delay');
+            if (delay !== null && /^\d+$/.test(delay)) {
+                el.style.setProperty('--i', delay);
+            }
+            observer.observe(el);
+        });
+
+        window.patitaRevealReady = true;
+    }());
+
     var locale = root.getAttribute('data-locale') || 'es-US';
     var formatters = {};
 
