@@ -150,7 +150,7 @@ HTACCESS);
 
 // 5. .env de producción a partir de .env.example y del .env local.
 $local = [];
-foreach (file(BASE_PATH . '/.env', FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+foreach ((is_file(BASE_PATH . '/.env') ? file(BASE_PATH . '/.env', FILE_IGNORE_NEW_LINES) : []) as $line) {
     if (preg_match('/^([A-Z][A-Z0-9_]*)=(.*)$/', $line, $m) === 1) {
         $local[$m[1]] = $m[2];
     }
