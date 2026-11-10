@@ -1,12 +1,14 @@
 <?php $user = auth_user(); ?>
 <footer class="site-footer">
+    <div class="footer-panel">
     <div class="container footer-grid">
         <div class="footer-brand">
-            <a class="brand brand-on-dark" href="<?= e(url('/')) ?>">
-                <img class="brand-mark" src="<?= e(asset('assets/images/logo-light.svg')) ?>" alt="" width="36" height="36">
+            <a class="brand" href="<?= e(url('/')) ?>">
+                <img class="brand-mark" src="<?= e(asset('assets/images/logo.svg')) ?>" alt="" width="36" height="36">
                 <span class="brand-name"><?= e(config('app.name')) ?></span>
             </a>
             <p>Todo para tu mascota, sea cual sea. Precios en <?= e(config('app.currency')) ?> para <?= e(country_name((string) config('app.country'))) ?>.</p>
+            <a class="btn btn-accent" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
         </div>
         <nav aria-label="Comprar">
             <h2 class="footer-title">Comprar</h2>
@@ -47,6 +49,7 @@
         </nav>
     </div>
     <div class="container footer-bottom">
-        <p>© <?= e(date('Y')) ?> <?= e(config('app.name')) ?>. Iconos de Lucide (ISC) y Tabler Icons (MIT).</p>
+        <p>© <?= e(date('Y')) ?> <?= e(config('app.name')) ?>. Iconos de Lucide (ISC) y Tabler Icons (MIT). Fotos de portada: Unsplash.</p>
+    </div>
     </div>
 </footer>

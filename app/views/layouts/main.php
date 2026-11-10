@@ -17,12 +17,12 @@ $metaDescription = $description ?? 'Accesorios, alimento e insumos para perros, 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle) ?></title>
     <meta name="description" content="<?= e($metaDescription) ?>">
-    <meta name="theme-color" content="#218739">
+    <meta name="theme-color" content="#F6F6F6">
     <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
     <link rel="icon" href="<?= e(asset('assets/images/favicon.svg')) ?>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500..800&amp;family=Onest:wght@400..700&amp;display=swap">
     <link rel="stylesheet" href="<?= e(asset('assets/css/app.css')) ?>">
     <script src="<?= e(asset('assets/js/motion-boot.js')) ?>"></script>
     <script src="<?= e(asset('assets/js/app.js')) ?>" defer></script>

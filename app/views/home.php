@@ -8,9 +8,17 @@ $freeFrom = App\Services\Cart::freeShippingFrom();
 $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')) === array_sum(array_column($brands, 'total'));
 ?>
 <section class="hero">
+    <div class="hero-mosaic" aria-hidden="true">
+        <?php foreach (['corgi', 'pug', 'kitten', 'terrier'] as $i => $photo): ?>
+            <img class="hero-tile" data-reveal="scale" data-delay="<?= 2 + $i ?>"
+                 src="<?= e(asset('assets/images/hero/' . $photo . '-480.jpg')) ?>"
+                 srcset="<?= e(asset('assets/images/hero/' . $photo . '-480.jpg')) ?> 480w, <?= e(asset('assets/images/hero/' . $photo . '-900.jpg')) ?> 900w"
+                 sizes="(min-width: 900px) 25vw, 50vw" alt="" width="480" height="600" decoding="async"<?= $i === 0 ? ' fetchpriority="high"' : '' ?>>
+        <?php endforeach; ?>
+    </div>
     <div class="container hero-inner">
         <div class="hero-copy">
-            <h1 class="hero-title" data-split>Todo para tu mascota, <span class="hero-mark">sea cual sea.<svg class="hero-mark-line" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M4 12C60 4 140 3 296 9"/></svg></span></h1>
+            <h1 class="hero-title" data-split>Todo para tu mascota, sea cual sea.</h1>
             <p class="hero-lead" data-reveal data-delay="6">
                 Alimento, accesorios e insumos para perros, gatos, aves, peces, reptiles, caballos y animales pequeños.
                 Pagas por Pago Móvil o al recibir.
@@ -20,45 +28,28 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
                 <a class="btn btn-outline-dark btn-lg" href="#mascotas">Elegir mascota</a>
             </div>
         </div>
-        <div class="hero-ark" aria-hidden="true" data-reveal="fade">
-            <div class="hero-ark-boat">
-                <ul class="hero-ark-animals">
-                    <?php foreach (pets() as $pet): ?>
-                        <li><?= icon((string) $pet['icon']) ?></li>
-                    <?php endforeach; ?>
-                </ul>
-                <svg class="hero-ark-hull" viewBox="0 0 400 112" focusable="false">
-                    <path class="hull" d="M8 8H392L344 78Q338 86 328 86H72Q62 86 56 78Z"/>
-                    <path class="hull-stripe" d="M32 30H368"/>
-                </svg>
-            </div>
-            <svg class="hero-ark-waves" viewBox="0 0 400 24" preserveAspectRatio="none" focusable="false">
-                <path class="waves" d="M-100 12q25-10 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
-                <path class="waves waves-back" d="M-100 20q25-8 50 0t50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0 50 0"/>
-            </svg>
-        </div>
     </div>
 </section>
 
 <section class="section" id="mascotas" aria-labelledby="mascotas-titulo">
     <div class="container">
         <div class="section-head">
-            <h2 id="mascotas-titulo">Comprar por mascota</h2>
+            <h2 id="mascotas-titulo" data-split>Comprar por mascota</h2>
             <a class="link-more" href="<?= e(url('/mascotas')) ?>">Ver todas</a>
         </div>
-        <ul class="pet-grid">
+        <ul class="pet-photos">
+            <?php $n = 0; ?>
             <?php foreach (pets() as $code => $pet): ?>
                 <?php $count = $petCounts[$code] ?? 0; ?>
-                <li class="pet-card">
+                <li class="pet-photo" data-reveal data-delay="<?= $n++ ?>">
                     <a href="<?= e(url('/mascotas/' . $pet['slug'])) ?>">
                         <?php $photo = pet_photo($code); ?>
-                        <?php if ($photo !== null): ?><img class="pet-card-photo" src="<?= e($photo) ?>" alt="" width="400" height="300" loading="lazy" decoding="async"><?php endif; ?>
-                        <span class="pet-card-icon"><?= icon((string) $pet['icon']) ?></span>
-                        <span class="pet-card-text">
-                            <span class="pet-card-name"><?= e($pet['label']) ?></span>
-                            <span class="pet-card-count"><?= $count === 1 ? '1 producto' : $count . ' productos' ?></span>
+                        <?php if ($photo !== null): ?><img class="pet-photo-img" src="<?= e($photo) ?>" alt="" width="400" height="500" loading="lazy" decoding="async"><?php endif; ?>
+                        <span class="pet-photo-text">
+                            <span class="pet-photo-name"><?= icon((string) $pet['icon']) ?><?= e($pet['label']) ?></span>
+                            <span class="pet-photo-count"><?= $count === 1 ? '1 producto' : $count . ' productos' ?></span>
                             <?php if (isset($pet['subtypes'])): ?>
-                                <span class="pet-card-sub"><?= e(implode(', ', array_values($pet['subtypes']))) ?></span>
+                                <span class="pet-photo-sub"><?= e(implode(', ', array_values($pet['subtypes']))) ?></span>
                             <?php endif; ?>
                         </span>
                     </a>
@@ -68,10 +59,10 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
     </div>
 </section>
 
-<section class="section section-tint" aria-labelledby="destacados-titulo">
+<section class="section section-featured" aria-labelledby="destacados-titulo">
     <div class="container">
         <div class="section-head">
-            <h2 id="destacados-titulo">Productos destacados</h2>
+            <h2 id="destacados-titulo" data-split>Productos destacados</h2>
             <a class="link-more" href="<?= e(url('/catalogo')) ?>">Ver catálogo</a>
         </div>
         <?php if ($featured === []): ?>
@@ -81,7 +72,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
             </div>
         <?php else: ?>
             <p class="section-note">Una selección con existencias de cada tipo de mascota.</p>
-            <div class="product-grid">
+            <div class="product-grid" data-reveal>
                 <?php foreach ($featured as $product): ?>
                     <?= App\Core\View::partial('partials/product-card', ['product' => $product, 'returnTo' => '/']) ?>
                 <?php endforeach; ?>
@@ -93,13 +84,13 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
 <section class="section" aria-labelledby="marcas-titulo">
     <div class="container">
         <div class="section-head">
-            <h2 id="marcas-titulo">Comprar por marca</h2>
+            <h2 id="marcas-titulo" data-split>Comprar por marca</h2>
             <a class="link-more" href="<?= e(url('/marcas')) ?>">Ver todas</a>
         </div>
         <?php if ($allDemoBrands): ?>
             <p class="section-note">Las marcas del catálogo inicial son ficticias, creadas para esta demostración.</p>
         <?php endif; ?>
-        <ul class="brand-list">
+        <ul class="brand-list" data-reveal>
             <?php foreach ($brands as $brand): ?>
                 <li>
                     <a href="<?= e(url('/marcas/' . $brand['slug'])) ?>">
@@ -115,9 +106,9 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
 <section class="section" aria-labelledby="cuida-titulo">
     <div class="container">
         <div class="section-head">
-            <h2 id="cuida-titulo">Cuida mejor a tu mascota</h2>
+            <h2 id="cuida-titulo" data-split>Cuida mejor a tu mascota</h2>
         </div>
-        <ul class="tool-grid">
+        <ul class="tool-grid" data-reveal>
             <li class="tool-card">
                 <a href="<?= e(url('/cuidados')) ?>">
                     <span class="tool-card-icon"><?= icon('book-open') ?></span>
@@ -153,7 +144,7 @@ $allDemoBrands = $brands !== [] && array_sum(array_column($brands, 'demo_total')
 <section class="section section-benefits" aria-labelledby="beneficios-titulo">
     <div class="container">
         <h2 id="beneficios-titulo" class="sr-only">Cómo compras en <?= e(config('app.name')) ?></h2>
-        <ul class="benefits">
+        <ul class="benefits" data-reveal>
             <li>
                 <?= icon('truck', 'icon icon-lg') ?>
                 <h3>Envío claro desde el carrito</h3>
