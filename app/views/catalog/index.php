@@ -26,13 +26,23 @@ $petData = $contextPet !== null ? pets()[$contextPet] : null;
 <div class="container page">
     <?= App\Core\View::partial('partials/breadcrumbs', ['items' => $crumbs]) ?>
 
-    <header class="page-head<?= $petData !== null ? ' page-head-pet' : '' ?>">
-        <?php if ($petData !== null): ?>
-            <span class="page-head-icon"><?= icon((string) $petData['icon']) ?></span>
-        <?php endif; ?>
-        <div>
-            <h1><?= e($heading) ?></h1>
-            <p class="page-intro"><?= e($intro) ?></p>
+    <?php
+    $bannerPhotos = $petData !== null && pet_photo((string) $contextPet) !== null
+        ? [pet_photo((string) $contextPet)]
+        : [asset('assets/images/hero/corgi-480.jpg'), asset('assets/images/hero/kitten-480.jpg')];
+    ?>
+    <header class="page-head page-banner<?= $petData !== null ? ' page-head-pet' : '' ?>">
+        <div class="page-banner-text">
+            <?php if ($petData !== null): ?>
+                <span class="page-head-icon"><?= icon((string) $petData['icon']) ?></span>
+            <?php endif; ?>
+            <h1 data-split><?= e($heading) ?></h1>
+            <p class="page-intro" data-reveal data-delay="3"><?= e($intro) ?></p>
+        </div>
+        <div class="page-banner-media" aria-hidden="true">
+            <?php foreach ($bannerPhotos as $i => $src): ?>
+                <img src="<?= e($src) ?>" alt="" width="480" height="600" decoding="async" data-reveal="scale" data-delay="<?= 2 + $i ?>">
+            <?php endforeach; ?>
         </div>
     </header>
 

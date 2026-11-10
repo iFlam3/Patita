@@ -10,10 +10,11 @@ $unknown = array_column(array_filter($rows, static fn (array $r): bool => $r['le
 ?>
 <div class="container page page-narrow">
     <?= App\Core\View::partial('partials/breadcrumbs', ['items' => [['Herramientas', '/herramientas'], ['Alimentos peligrosos', null]]]) ?>
-    <header class="page-head">
-        <div>
-            <h1>Alimentos peligrosos para mascotas</h1>
-            <p class="page-intro">Elige tu mascota para ver qué alimentos de uso común son tóxicos o no recomendados.</p>
+    <header class="page-head page-banner page-banner-tool">
+        <div class="page-banner-text">
+            <span class="page-head-icon"><?= icon('apple') ?></span>
+            <h1 data-split>Alimentos peligrosos para mascotas</h1>
+            <p class="page-intro" data-reveal data-delay="3">Elige tu mascota para ver qué alimentos de uso común son tóxicos o no recomendados.</p>
         </div>
     </header>
 

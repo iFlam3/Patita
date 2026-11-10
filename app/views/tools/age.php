@@ -11,14 +11,15 @@ $sizes = (array) config('tools.dog_sizes');
 ?>
 <div class="container page page-narrow">
     <?= App\Core\View::partial('partials/breadcrumbs', ['items' => [['Herramientas', '/herramientas'], ['Calculadora de edad', null]]]) ?>
-    <header class="page-head">
-        <div>
-            <h1>Calculadora de edad</h1>
-            <p class="page-intro">¿Cuántos años humanos tiene tu perro o tu gato? Los dos primeros años maduran muy rápido y, en perros, el tamaño cambia el ritmo de envejecimiento.</p>
+    <header class="page-head page-banner page-banner-tool">
+        <div class="page-banner-text">
+            <span class="page-head-icon"><?= icon('cake') ?></span>
+            <h1 data-split>Calculadora de edad</h1>
+            <p class="page-intro" data-reveal data-delay="3">¿Cuántos años humanos tiene tu perro o tu gato? Los dos primeros años maduran muy rápido y, en perros, el tamaño cambia el ritmo de envejecimiento.</p>
         </div>
     </header>
 
-    <form class="panel tool-form" action="<?= e(url('/herramientas/edad')) ?>#resultado" method="get">
+    <form class="panel tool-form" data-reveal data-delay="4" action="<?= e(url('/herramientas/edad')) ?>#resultado" method="get">
         <fieldset class="field-group">
             <legend>Mascota</legend>
             <div class="segmented">

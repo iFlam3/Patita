@@ -10,14 +10,15 @@
 ?>
 <div class="container page page-narrow">
     <?= App\Core\View::partial('partials/breadcrumbs', ['items' => [['Herramientas', '/herramientas'], ['Peso saludable', null]]]) ?>
-    <header class="page-head">
-        <div>
-            <h1>Calculadora de peso saludable</h1>
-            <p class="page-intro">Como cada raza y cada animal es distinto, no usamos tablas de peso por raza: evaluamos la condición corporal de tu perro o gato, que es lo que revisan los veterinarios.</p>
+    <header class="page-head page-banner page-banner-tool">
+        <div class="page-banner-text">
+            <span class="page-head-icon"><?= icon('scale') ?></span>
+            <h1 data-split>Calculadora de peso saludable</h1>
+            <p class="page-intro" data-reveal data-delay="3">Como cada raza y cada animal es distinto, no usamos tablas de peso por raza: evaluamos la condición corporal de tu perro o gato, que es lo que revisan los veterinarios.</p>
         </div>
     </header>
 
-    <form class="panel tool-form" action="<?= e(url('/herramientas/peso-saludable')) ?>#resultado" method="get">
+    <form class="panel tool-form" data-reveal data-delay="4" action="<?= e(url('/herramientas/peso-saludable')) ?>#resultado" method="get">
         <fieldset class="field-group">
             <legend>Mascota</legend>
             <div class="segmented">
