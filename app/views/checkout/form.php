@@ -100,7 +100,7 @@ $currency = (string) $summary['currency'];
                         <label class="radio-card">
                             <input type="radio" name="payment_method" value="<?= e($code) ?>"<?= $values['payment_method'] === $code ? ' checked' : '' ?>>
                             <span class="radio-card-body">
-                                <span class="radio-card-title"><?= icon($code === 'bank_transfer' ? 'banknote' : 'hand-coins', 'icon icon-sm') ?> <?= e($method['label']) ?></span>
+                                <span class="radio-card-title"><?= icon($code === 'pago_movil' ? 'banknote' : 'hand-coins', 'icon icon-sm') ?> <?= e($method['label']) ?></span>
                                 <span class="radio-card-text"><?= e($method['description']) ?></span>
                             </span>
                         </label>

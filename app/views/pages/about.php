@@ -7,7 +7,7 @@
         <h2>Lo que nos importa</h2>
         <ul class="care-list">
             <li><?= icon('check', 'icon icon-sm') ?><span><strong>Información clara.</strong> Si un dato del producto no está disponible, lo decimos. No prometemos beneficios de salud ni damos indicaciones veterinarias.</span></li>
-            <li><?= icon('check', 'icon icon-sm') ?><span><strong>Precios sin sorpresas.</strong> Ves el costo de envío antes de confirmar y pagas por transferencia o al recibir.</span></li>
+            <li><?= icon('check', 'icon icon-sm') ?><span><strong>Precios sin sorpresas.</strong> Ves el costo de envío antes de confirmar y pagas por Pago Móvil o al recibir.</span></li>
             <li><?= icon('check', 'icon icon-sm') ?><span><strong>Todas las especies.</strong> Desde estética canina y felina hasta acuarios, terrarios y cuidado equino.</span></li>
             <li><?= icon('check', 'icon icon-sm') ?><span><strong>Bienestar animal.</strong> No vendemos animales vivos. Publicamos guías de cuidado y herramientas gratuitas para ayudarte a cuidar mejor.</span></li>
         </ul>

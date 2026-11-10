@@ -270,9 +270,8 @@ php scripts/seed_sales_demo.php --clear
 | `APP_CURRENCY` | `USD` | Moneda de venta (código ISO 4217) |
 | `APP_LOCALE` | `es-US` | Formato de precios con `Intl.NumberFormat` |
 | `APP_TIMEZONE` | `America/Caracas` | Zona para mostrar fechas (se guardan en UTC) |
-| `SHIPPING_COUNTRIES` | `*` | Países de envío: lista ISO separada por comas o `*` para todos (219) |
 | `SHIPPING_FLAT_RATE` / `SHIPPING_FREE_FROM` | `99.00` / `999.00` | Costo de envío y umbral de envío gratis |
-| `PAYMENT_METHODS` | `bank_transfer,cash_on_delivery` | Formas de pago demostrativas |
+| `PAYMENT_METHODS` | `pago_movil,cash_on_delivery` | Formas de pago demostrativas |
 
 Los productos demo están en USD. Si cambias `APP_CURRENCY`, no se mostrarán
 hasta que actualices su precio y moneda desde el panel o con un archivo de

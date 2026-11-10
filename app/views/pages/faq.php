@@ -4,7 +4,7 @@ $free = App\Services\Cart::freeShippingFrom();
 $faqs = [
     ['¿Cómo hago un pedido?', 'Agrega productos al carrito, ingresa o crea tu cuenta, completa tus datos de entrega y revisa el resumen. Al confirmar recibes un número de pedido y un correo con el detalle.'],
     ['¿Necesito una cuenta para comprar?', 'Puedes armar tu carrito sin cuenta. Para confirmar el pedido sí necesitas una cuenta: así puedes ver el historial y el estado de tus pedidos.'],
-    ['¿Qué formas de pago aceptan?', 'Transferencia bancaria o pago contra entrega. No pedimos ni guardamos datos de tarjetas.'],
+    ['¿Qué formas de pago aceptan?', 'Pago Móvil o pago contra entrega. Puedes ver el total en bolívares con la tasa del día. No pedimos ni guardamos datos de tarjetas.'],
     ['¿Cuánto cuesta el envío?', ''],
     ['¿A qué países envían?', 'Al completar el pedido eliges el país de entrega en la lista. El costo y las condiciones se muestran antes de confirmar.'],
     ['¿Puedo cancelar o cambiar mi pedido?', 'Escríbenos con tu número de pedido antes de que sea enviado y lo revisamos. Si ya fue enviado, consulta la política de cambios y devoluciones.'],

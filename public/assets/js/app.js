@@ -539,5 +539,60 @@
         });
     }());
 
+    // ------------------------------------------------------------ tasa del dólar (Bs)
+
+    // Consulta la tasa del dólar paralelo y muestra el total en bolívares.
+    document.querySelectorAll('[data-bs-rate]').forEach(function (box) {
+        var button = box.querySelector('[data-bs-rate-btn]');
+        var out = box.querySelector('[data-bs-rate-out]');
+        var usd = Number(box.getAttribute('data-usd'));
+        box.hidden = false;
+        button.addEventListener('click', function () {
+            button.disabled = true;
+            out.textContent = 'Consultando la tasa…';
+            fetch('https://ve.dolarapi.com/v1/dolares/paralelo', { headers: { Accept: 'application/json' } })
+                .then(function (res) {
+                    if (!res.ok) { throw new Error('HTTP ' + res.status); }
+                    return res.json();
+                })
+                .then(function (data) {
+                    var rate = Number(data.promedio || data.venta || data.compra);
+                    if (!isFinite(rate) || rate <= 0) { throw new Error('Tasa inválida'); }
+                    var bs = new Intl.NumberFormat('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    var dollars = new Intl.NumberFormat('es-VE', { style: 'currency', currency: 'USD' });
+                    var date = data.fechaActualizacion ? new Date(data.fechaActualizacion).toLocaleString('es-VE') : '';
+                    out.innerHTML = '';
+                    var lines = [
+                        ['Tasa paralelo', 'Bs ' + bs.format(rate) + ' / $'],
+                        ['Total en $', dollars.format(usd)],
+                        ['Total en Bs', 'Bs ' + bs.format(usd * rate)]
+                    ];
+                    var dl = document.createElement('dl');
+                    lines.forEach(function (pair) {
+                        var row = document.createElement('div');
+                        var dt = document.createElement('dt');
+                        var dd = document.createElement('dd');
+                        dt.textContent = pair[0];
+                        dd.textContent = pair[1];
+                        row.appendChild(dt);
+                        row.appendChild(dd);
+                        dl.appendChild(row);
+                    });
+                    out.appendChild(dl);
+                    if (date) {
+                        var p = document.createElement('p');
+                        p.className = 'field-hint';
+                        p.textContent = 'Actualizada: ' + date + ' · Fuente: DolarApi';
+                        out.appendChild(p);
+                    }
+                    button.textContent = 'Actualizar tasa';
+                })
+                .catch(function () {
+                    out.textContent = 'No se pudo obtener la tasa. Intenta de nuevo.';
+                })
+                .then(function () { button.disabled = false; });
+        });
+    });
+
     formatPrices(document);
 }());

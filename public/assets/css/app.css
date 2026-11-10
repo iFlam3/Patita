@@ -2130,3 +2130,15 @@ input[type="file"] { padding: 10px; border: 1.5px dashed var(--line-strong); bor
 .auth-resend { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 20px; font-size: 0.9375rem; color: var(--carbon-soft); }
 .btn-link { padding: 0; border: 0; background: none; color: var(--primary-ink); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
 .btn-link:hover { color: var(--primary-deep); }
+
+/* Pago Móvil y tasa del dólar */
+.pm-details { display: grid; gap: 6px; margin: 0 0 12px; }
+.pm-details div,
+.bs-rate dl div { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.pm-details dt,
+.bs-rate dt { font-weight: 400; color: var(--carbon-soft); }
+.pm-details dd,
+.bs-rate dd { margin: 0; font-weight: 700; }
+.bs-rate { margin: 12px 0; }
+.bs-rate dl { display: grid; gap: 4px; margin: 10px 0 4px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--white); }
+.bs-rate dl div:last-child dd { color: var(--primary-ink); font-size: 1.1rem; }
